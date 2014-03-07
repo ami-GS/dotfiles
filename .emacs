@@ -1,0 +1,94 @@
+;;
+(setq-default tab-width 4)
+
+;;; 日本語環境設定
+(set-language-environment "Japanese")
+
+;;; 列数の表示
+(column-number-mode 1)
+
+;; 行番号表示
+(require 'linum)
+(global-linum-mode)
+
+;;フリンジの色の変更
+(set-face-background 'fringe "gray20")
+
+(set-face-foreground 'mode-line "white")
+(set-face-background 'mode-line "blue4")
+
+;;load-pathに~/.emacs.dを追加
+(setq load-path (cons "~/.emacs.d/python" load-path))
+
+;;color-theme
+;;(require 'color-theme)
+;;(color-theme-initialize)
+;;(color-theme-dark-laptop)
+
+;;対応する括弧に色をつける
+(require 'paren)
+(show-paren-mode 1)
+
+;;対応する括弧に@で移動
+(global-set-key "@" 'match-paren)
+(defun match-paren (arg)
+  "Go to the matching paren if on a paren; otherwise insert %."
+  (interactive "p")
+  (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
+                ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+                (t (self-insert-command (or arg 1)))))
+
+
+;;;カーソルの非選択画面での表示
+(setq cursor-in-non-selected-windows nil)
+
+;; 文字数カウント関数
+(defun count-char-region (start end)
+  (interactive "r")
+  (save-excursion          ;;これと
+    (save-restriction ;;これは オマジナイ。 (ちゃんと調べましょう (爆))
+      (let ((lf-num 0))          ;;改行文字の個数用、初期化している。
+        (goto-char start) ;;指定領域の先頭に行く。
+        (while (re-search-forward "[\n\C-m]" end t) ;;改行文字のカウント
+          (setq lf-num (+ 1 lf-num))) ;;(つまり、 search できる度に 1 足す)
+        (message "%d 文字 (除改行文字) : %d 行 : %d 文字 (含改行文字)"
+                 (- end start lf-num) (count-lines start end) (- end start))))))
+
+;;yasnippet
+(add-to-list 'load-path
+			 "~/.emacs.d/plugins/yasnippet")
+(require 'yasnippet)
+(yas-global-mode 1)
+
+
+;; python mode
+;;(progn (cd "~/.emacs.d/vendor")
+;;       (normal-top-level-add-subdirs-to-load-path))
+
+(require 'python)
+
+(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+(add-to-list 'interpreter-mode-alist '("python" . python-mode))
+(autoload 'python-mode "python-mode" "Python editing mode." t)
+(add-hook 'python-mode-hook
+                  (function (lambda ()
+                                          (setq indent-tabs-mode nil)
+                                          (setq indent-level 4)
+                                          (setq python-indent 4)
+                                          (setq tab-width 4)
+                                          )))
+
+;; paren complete
+(add-hook 'python-mode-hook
+          (lambda ()
+            (define-key python-mode-map "\"" 'electric-pair)
+            (define-key python-mode-map "\'" 'electric-pair)
+            (define-key python-mode-map "(" 'electric-pair)
+            (define-key python-mode-map "[" 'electric-pair)
+            (define-key python-mode-map "{" 'electric-pair)))
+
+(defun electric-pair ()
+  "Insert character pair without sournding spaces"
+  (interactive)
+  (let (parens-require-spaces)
+    (insert-pair)))
