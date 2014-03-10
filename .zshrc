@@ -29,7 +29,7 @@ HISTSIZE=1000
 SACEHIST=1000
 
 #prompt
-PROMPT='%F{green}(╹◡╹)っ%f'
+PROMPT='%F{green}>> %f'
 RPROMPT='%F{white}%35<..<%~/%f'
 
 #color
