@@ -55,10 +55,10 @@
                  (- end start lf-num) (count-lines start end) (- end start))))))
 
 ;;yasnippet
-(add-to-list 'load-path
-			 "~/.emacs.d/plugins/yasnippet")
-(require 'yasnippet)
-(yas-global-mode 1)
+;;(add-to-list 'load-path
+;;			 "~/.emacs.d/plugins/yasnippet")
+;;(require 'yasnippet)
+;;(yas-global-mode 1)
 
 
 ;; python mode
@@ -86,6 +86,19 @@
             (define-key python-mode-map "(" 'electric-pair)
             (define-key python-mode-map "[" 'electric-pair)
             (define-key python-mode-map "{" 'electric-pair)))
+
+;;js2-mode
+(add-to-list 'load-path
+			 "~/.emacs.d")
+(autoload 'js2-mode "js2" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(eval-after-load "js2"
+  '(progn
+	 (setq js2-mirror-mode nil)
+	 )
+)
+
+
 
 (defun electric-pair ()
   "Insert character pair without sournding spaces"
