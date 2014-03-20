@@ -54,6 +54,14 @@
         (message "%d 文字 (除改行文字) : %d 行 : %d 文字 (含改行文字)"
                  (- end start lf-num) (count-lines start end) (- end start))))))
 
+
+(global-set-key (kbd "(") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "{") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
+(setq skeleton-pair 1)
+
 ;;yasnippet
 ;;(add-to-list 'load-path
 ;;			 "~/.emacs.d/plugins/yasnippet")
@@ -79,13 +87,13 @@
                                           )))
 
 ;; paren complete
-(add-hook 'python-mode-hook
-          (lambda ()
-            (define-key python-mode-map "\"" 'electric-pair)
-            (define-key python-mode-map "\'" 'electric-pair)
-            (define-key python-mode-map "(" 'electric-pair)
-            (define-key python-mode-map "[" 'electric-pair)
-            (define-key python-mode-map "{" 'electric-pair)))
+;;(add-hook 'python-mode-hook
+;;          (lambda ()
+;;            (define-key python-mode-map "\"" 'electric-pair)
+;;            (define-key python-mode-map "\'" 'electric-pair)
+;;            (define-key python-mode-map "(" 'electric-pair)
+;;            (define-key python-mode-map "[" 'electric-pair)
+;;           (define-key python-mode-map "{" 'electric-pair)))
 
 ;;js2-mode
 (add-to-list 'load-path
