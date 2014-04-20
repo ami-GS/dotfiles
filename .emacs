@@ -1,3 +1,6 @@
+;;load init.el
+(load (expand-file-name (concat (getenv "HOME") "/.emacs.d/init")))
+
 ;;
 (setq-default tab-width 4)
 
@@ -74,26 +77,18 @@
 ;;       (normal-top-level-add-subdirs-to-load-path))
 
 (require 'python)
-
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 (autoload 'python-mode "python-mode" "Python editing mode." t)
 (add-hook 'python-mode-hook
-                  (function (lambda ()
-                                          (setq indent-tabs-mode nil)
-                                          (setq indent-level 4)
-                                          (setq python-indent 4)
-                                          (setq tab-width 4)
-                                          )))
-
-;; paren complete
-;;(add-hook 'python-mode-hook
-;;          (lambda ()
-;;            (define-key python-mode-map "\"" 'electric-pair)
-;;            (define-key python-mode-map "\'" 'electric-pair)
-;;            (define-key python-mode-map "(" 'electric-pair)
-;;            (define-key python-mode-map "[" 'electric-pair)
-;;           (define-key python-mode-map "{" 'electric-pair)))
+		  'jedi:setup
+		  (function (lambda ()
+					  (setq indent-tabs-mode nil)
+					  (setq indent-level 4)
+					  (setq python-indent 4)
+					  (setq tab-width 4)
+					  )))
+(setq jedi:complete-on-dot t)
 
 ;;js2-mode
 (add-to-list 'load-path

@@ -1,5 +1,5 @@
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
@@ -19,9 +19,8 @@
 (add-to-list 'load-path "~/.emacs.d/auto-complete")
 
 
-
 ;;;; auto-complete
 (require 'auto-complete-config)
-(global-auto-complete-mode t)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
-(ac-config-default)
+;;(global-auto-complete-mode t)
+;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
+;;(ac-config-default)
