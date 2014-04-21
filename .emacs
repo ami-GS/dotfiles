@@ -16,7 +16,6 @@
 
 ;;フリンジの色の変更
 (set-face-background 'fringe "gray20")
-
 (set-face-foreground 'mode-line "white")
 (set-face-background 'mode-line "blue4")
 
@@ -24,9 +23,10 @@
 (setq load-path (cons "~/.emacs.d/python" load-path))
 
 ;;color-theme
-;;(require 'color-theme)
-;;(color-theme-initialize)
-;;(color-theme-dark-laptop)
+(add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-dark-laptop)
 
 ;;対応する括弧に色をつける
 (require 'paren)
@@ -71,11 +71,6 @@
 ;;(require 'yasnippet)
 ;;(yas-global-mode 1)
 
-
-;; python mode
-;;(progn (cd "~/.emacs.d/vendor")
-;;       (normal-top-level-add-subdirs-to-load-path))
-
 (require 'python)
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
@@ -100,7 +95,6 @@
 	 (setq js2-mirror-mode nil)
 	 )
 )
-
 
 
 (defun electric-pair ()
