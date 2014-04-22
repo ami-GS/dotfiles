@@ -67,5 +67,6 @@ export NODE_PATH=$npm_dir
 alias emacs="emacs-24.3 -nw"
 alias active2="source /Users/daiki/pyENV2/bin/activate"
 alias active3="source /Users/daiki/pyENV3/bin/activate"
+alias actpypy="source /Users/daiki/pyEnvpy/bin/activate"
 alias py2env="source /Users/daiki/pyENV2/bin/activate && python"
 alias py3env="source /Users/daiki/pyENV3/bin/activate && python"
