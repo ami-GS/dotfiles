@@ -71,7 +71,19 @@
 ;;(require 'yasnippet)
 ;;(yas-global-mode 1)
 
+(require 'go-mode-load)
+(add-hook 'go-mode-hook
+      '(lambda()
+         (setq c-basic-offset 4)
+         (setq indent-tabs-mode t)
+         (local-set-key (kbd "M-.") 'godef-jump)
+         (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
+         (local-set-key (kbd "C-c i") 'go-goto-imports)
+         (local-set-key (kbd "C-c d") 'godoc)
+         (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)))
+
 (require 'python)
+(require 'jedi)
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 (autoload 'python-mode "python-mode" "Python editing mode." t)
@@ -86,16 +98,11 @@
 (setq jedi:complete-on-dot t)
 
 ;;js2-mode
-(add-to-list 'load-path
-			 "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d")
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (eval-after-load "js2"
-  '(progn
-	 (setq js2-mirror-mode nil)
-	 )
-)
-
+  '(progn (setq js2-mirror-mode nil)))
 
 (defun electric-pair ()
   "Insert character pair without sournding spaces"
