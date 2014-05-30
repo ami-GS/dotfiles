@@ -42,6 +42,10 @@
                 (t (self-insert-command (or arg 1)))))
 
 
+;;;滑らかスクロール
+(require 'smooth-scroll)
+(smooth-scroll-mode t)
+
 ;;;カーソルの非選択画面での表示
 (setq cursor-in-non-selected-windows nil)
 
