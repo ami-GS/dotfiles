@@ -32,6 +32,9 @@
 (require 'paren)
 (show-paren-mode 1)
 
+;;ansi-termの文字化け対策
+(setq locale-coding-system 'utf-8)
+
 ;;対応する括弧に@で移動
 (global-set-key "@" 'match-paren)
 (defun match-paren (arg)
@@ -61,6 +64,16 @@
         (message "%d 文字 (除改行文字) : %d 行 : %d 文字 (含改行文字)"
                  (- end start lf-num) (count-lines start end) (- end start))))))
 
+;;directry tree
+(require 'popwin)
+(setq display-buffer-function 'popwin:display-buffer)
+(require 'direx)
+(setq direx:leaf-icon "  "
+	  direx:open-icon "▼ "
+	  direx:closed-icon "▶ ")
+(push '(direx:direx-mode :position left :width 25 :dedicated t)
+	  popwin:special-display-config)
+(global-set-key (kbd "C-x j") 'direx:jump-to-directory-other-window)
 
 (global-set-key (kbd "(") 'skeleton-pair-insert-maybe)
 (global-set-key (kbd "{") 'skeleton-pair-insert-maybe)
