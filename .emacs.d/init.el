@@ -19,6 +19,13 @@
 (add-hook 'before-save-hook 'gofmt-before-save)
 (add-to-list 'load-path "~/.emacs.d/auto-complete")
 
+;;折りたたみ
+(add-hook 'python-mode-hook
+		  '(lambda()
+			 (hs-minor-mode 1))
+		  )
+(define-key global-map (kbd "C-x /") 'hs-toggle-hiding)
+
 (require 'highlight-symbol)
 (setq highlight-symbol-colors '("RoyalBlue1" "SpringGreen1" "DeepPink1" "OliveDrab"))
 (global-set-key (kbd "<f3>") 'highlight-symbol-at-point)
