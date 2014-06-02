@@ -26,6 +26,10 @@
 		  )
 (define-key global-map (kbd "C-x /") 'hs-toggle-hiding)
 
+(require 'git-gutter-fringe)
+(global-git-gutter-mode t)
+
+
 (require 'highlight-symbol)
 (setq highlight-symbol-colors '("RoyalBlue1" "SpringGreen1" "DeepPink1" "OliveDrab"))
 (global-set-key (kbd "<f3>") 'highlight-symbol-at-point)
