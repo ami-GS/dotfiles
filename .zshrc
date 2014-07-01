@@ -48,7 +48,7 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
 
 #from bash path
-export PATH=/sw/bin:/sw/sbin:./:$PATH
+export PATH=/sw/bin:/sw/sbin:./:/usr/local/sbin/:$PATH
 export MANPATH=/sw/share/man/ja:/sw/share/man:/usr/share/man:/usr/local/share/man:/opt/X11/share/man:/usr/textbin/man:/Library/Developer/CommandLineTools/usr/share/man:/sw/lib/perl15/5.16.2/man:$MANPATH
 
 #git
@@ -56,6 +56,14 @@ export EDITOR=emacs
 
 #lang
 export LANG=ja_JP.UTF-8
+
+#google_appengine
+export PATH=/usr/local/google_appengine/:$PATH
+export PYTHONPATH=/usr/local/google_appengine/:$PYTHONPATH
+
+#Go
+export GOPATH=$HOME/workspace/Go
+export PATH=$PATH:$GOPATH/bin
 
 #node
 [[ -s /Users/daiki/.nvm/nvm.sh ]] && . /Users/daiki/.nvm/nvm.sh
@@ -68,5 +76,7 @@ alias emacs="emacs-24.3 -nw"
 alias active2="source /Users/daiki/pyENV2/bin/activate"
 alias active3="source /Users/daiki/pyENV3/bin/activate"
 alias actpypy="source /Users/daiki/pyEnvpy/bin/activate"
+alias actbrain="source /Users/daiki/brainENV/bin/activate"
 alias py2env="source /Users/daiki/pyENV2/bin/activate && python"
 alias py3env="source /Users/daiki/pyENV3/bin/activate && python"
+alias lsusb="system_profiler SPUSBDataType"
