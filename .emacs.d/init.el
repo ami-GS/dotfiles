@@ -19,9 +19,6 @@
 			 (hs-minor-mode 1)))
 (define-key global-map (kbd "C-x /") 'hs-toggle-hiding)
 
-;;(require 'git-gutter-fringe)
-;;(global-git-gutter-mode t
-
 (require 'highlight-symbol)
 (setq highlight-symbol-colors '("RoyalBlue1" "SpringGreen1" "DeepPink1" "OliveDrab"))
 (global-set-key (kbd "<f3>") 'highlight-symbol-at-point)
@@ -154,6 +151,9 @@
 					  (setq jedi:complete-on-dot t)
 					  ))
 (add-hook 'python-mode-hook 'jedi:setup)
+
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 ;;js2-mode
 (add-to-list 'load-path "~/.emacs.d")
