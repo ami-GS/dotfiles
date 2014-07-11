@@ -80,3 +80,10 @@ alias actbrain="source /Users/daiki/brainENV/bin/activate"
 alias py2env="source /Users/daiki/pyENV2/bin/activate && python"
 alias py3env="source /Users/daiki/pyENV3/bin/activate && python"
 alias lsusb="system_profiler SPUSBDataType"
+alias cat="pygmentize"
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/daiki/google-cloud-sdk/path.zsh.inc'
+
+# The next line enables bash completion for gcloud.
+source '/Users/daiki/google-cloud-sdk/completion.zsh.inc'
