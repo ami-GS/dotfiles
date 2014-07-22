@@ -167,3 +167,8 @@
   (interactive)
   (let (parens-require-spaces)
     (insert-pair)))
+
+(require 'puppet-mode)
+(add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
+;(source melpa)
+;(depends-on "puppet-mode")
