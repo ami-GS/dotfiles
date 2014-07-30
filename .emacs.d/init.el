@@ -9,9 +9,12 @@
 (setq visible-bell t)
 (setq make-backup-files nil)
 
-(add-hook 'before-save-hook 'gofmt-before-save)
 (add-to-list 'load-path "~/.emacs.d/auto-complete-20140605.1908")
-(require 'auto-complete)
+;;;; auto-complete
+(require 'auto-complete-config)
+(global-auto-complete-mode t)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
+(ac-config-default)
 
 ;;折りたたみ
 (add-hook 'python-mode-hook
@@ -26,13 +29,6 @@
 
 (require 'auto-highlight-symbol)
 (global-auto-highlight-symbol-mode t)
-
-;;;; auto-complete
-(require 'auto-complete-config)
-;;(global-auto-complete-mode t)
-;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
-;;(ac-config-default)
-
 
 
 ;;
@@ -125,7 +121,6 @@
 
 (require 'go-mode-load)
 (require 'go-autocomplete)
-;;(require 'go-mode)
 (add-hook 'go-mode-hook
       '(lambda()
          (setq c-basic-offset 4)
@@ -135,6 +130,7 @@
          (local-set-key (kbd "C-c i") 'go-goto-imports)
          (local-set-key (kbd "C-c d") 'godoc)
 		 (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)))
+(add-hook 'before-save-hook 'gofmt-before-save)
 
 (require 'epc)
 (require 'python)
