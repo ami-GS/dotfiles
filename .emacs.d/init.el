@@ -30,6 +30,8 @@
 (require 'auto-highlight-symbol)
 (global-auto-highlight-symbol-mode t)
 
+;;
+(global-hl-line-mode t)
 
 ;;
 (setq-default tab-width 4)
@@ -166,5 +168,3 @@
 
 (require 'puppet-mode)
 (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
-;(source melpa)
-;(depends-on "puppet-mode")
