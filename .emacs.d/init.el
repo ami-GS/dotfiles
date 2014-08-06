@@ -31,9 +31,6 @@
 (global-auto-highlight-symbol-mode t)
 
 ;;
-(global-hl-line-mode t)
-
-;;
 (setq-default tab-width 4)
 
 ;;; 日本語環境設定
@@ -60,6 +57,10 @@
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-dark-laptop)
+;;
+(global-hl-line-mode t)
+(require 'col-highlight)
+(column-highlight-mode t)
 
 ;;対応する括弧に色をつける
 (require 'paren)
