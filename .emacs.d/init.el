@@ -9,8 +9,9 @@
 (setq visible-bell t)
 (setq make-backup-files nil)
 
-(add-to-list 'load-path "~/.emacs.d/auto-complete-20140605.1908")
+;;(add-to-list 'load-path "~/.emacs.d/auto-complete-20140605.1908")
 ;;;; auto-complete
+(require 'auto-complete)
 (require 'auto-complete-config)
 (global-auto-complete-mode t)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
