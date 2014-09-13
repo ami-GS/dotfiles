@@ -29,7 +29,10 @@ HISTSIZE=1000
 SACEHIST=1000
 
 #prompt
-PROMPT='%F{green}>> %f'
+source  /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh
+GIT_PS1_SHOWDIRTYSTATE=true
+PS1='%F{6}$(__git_ps1) %f%F{3}>> %f'
+PROMPT=$PS1
 RPROMPT='%F{white}%35<..<%~/%f'
 
 #color
@@ -81,6 +84,7 @@ alias py2env="source /Users/daiki/pyENV2/bin/activate && python"
 alias py3env="source /Users/daiki/pyENV3/bin/activate && python"
 alias lsusb="system_profiler SPUSBDataType"
 alias pycat="pygmentize"
+
 
 # The next line updates PATH for the Google Cloud SDK.
 source '/Users/daiki/google-cloud-sdk/path.zsh.inc'
