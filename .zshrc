@@ -55,7 +55,7 @@ export PATH=/sw/bin:/sw/sbin:./:/usr/local/sbin/:$PATH
 export MANPATH=/sw/share/man/ja:/sw/share/man:/usr/share/man:/usr/local/share/man:/opt/X11/share/man:/usr/textbin/man:/Library/Developer/CommandLineTools/usr/share/man:/sw/lib/perl15/5.16.2/man:$MANPATH
 
 #git
-export EDITOR=emacs
+export EDITOR='emacs-24.3 -nw'
 
 #lang
 export LANG=ja_JP.UTF-8
