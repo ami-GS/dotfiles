@@ -170,3 +170,6 @@
 
 (require 'puppet-mode)
 (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
+
+(require 'chef-mode)
+(add-to-list 'auto-mode-alist '("\\.rb$" . puppet-mode))
