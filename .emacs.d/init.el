@@ -135,10 +135,9 @@
          (local-set-key (kbd "C-c d") 'godoc)
 		 (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)))
 (add-hook 'before-save-hook 'gofmt-before-save)
+(add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 
-(require 'epc)
 (require 'python)
-(require 'jedi)
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 (autoload 'python-mode "python-mode" "Python editing mode." t)
@@ -148,9 +147,7 @@
 					  (setq indent-level 4)
 					  (setq python-indent 4)
 					  (setq tab-width 4)
-					  (setq jedi:complete-on-dot t)
 					  ))
-(add-hook 'python-mode-hook 'jedi:setup)
 
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
