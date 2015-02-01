@@ -62,6 +62,7 @@ export LANG=ja_JP.UTF-8
 
 #google_appengine
 export PATH=/usr/local/google_appengine/:$PATH
+export PATH=$HOME/google-cloud-sdk/platform/go_appengine/:$PATH
 export PYTHONPATH=/usr/local/google_appengine/:$PYTHONPATH
 
 #Go
