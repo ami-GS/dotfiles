@@ -29,7 +29,7 @@ HISTSIZE=1000
 SACEHIST=1000
 
 #prompt
-source  /Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-prompt.sh
+source  /opt/local/share/git/contrib/completion/git-prompt.sh
 GIT_PS1_SHOWDIRTYSTATE=true
 PS1='%F{6}$(__git_ps1) %f%F{3}>> %f'
 PROMPT=$PS1
@@ -40,7 +40,7 @@ export LS_COLOR='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:
 export CLICOLOR=tru
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-#conduct 'ls' after 'cd' 
+#conduct 'ls' after 'cd'
 function cd(){
     builtin cd $@ && ls;
 }
@@ -55,40 +55,44 @@ export PATH=/sw/bin:/sw/sbin:./:/usr/local/sbin/:$PATH
 export MANPATH=/sw/share/man/ja:/sw/share/man:/usr/share/man:/usr/local/share/man:/opt/X11/share/man:/usr/textbin/man:/Library/Developer/CommandLineTools/usr/share/man:/sw/lib/perl15/5.16.2/man:$MANPATH
 
 #git
-export EDITOR='emacs-24.3 -nw'
+export EDITOR='emacs-24.4 -nw'
 
 #lang
 export LANG=ja_JP.UTF-8
 
 #google_appengine
-export PATH=/usr/local/google_appengine/:$PATH
-export PATH=$HOME/google-cloud-sdk/platform/go_appengine/:$PATH
-export PYTHONPATH=/usr/local/google_appengine/:$PYTHONPATH
+#export PATH=/usr/local/google_appengine/:$PATH
+#export PATH=$HOME/google-cloud-sdk/platform/go_appengine/:$PATH
+#export PYTHONPATH=/usr/local/google_appengine/:$PYTHONPATH
 
 #Go
 export GOPATH=$HOME/workspace/Go
 export PATH=$PATH:$GOPATH/bin
 
+#lua (for mac)
+export LUA_PATH="/opt/local/share/lua/5.2/?.lua;?.lua"
+export LUA_CPATH="/opt/local/share/lua/5.2/?.so;?.so;/opt/local/share/luarocks/lib/lua/5.2/?.so;"
+
 #node
-[[ -s /Users/daiki/.nvm/nvm.sh ]] && . /Users/daiki/.nvm/nvm.sh
-nvm use v0.10.26
-npm_dir=${NVM_PATH}_modules
-export NODE_PATH=$npm_dir
+#[[ -s /Users/daiki/.nvm/nvm.sh ]] && . /Users/daiki/.nvm/nvm.sh
+#nvm use v0.10.26
+#npm_dir=${NVM_PATH}_modules
+#export NODE_PATH=$npm_dir
 
 #alias
-alias emacs="emacs-24.3 -nw"
+alias emacs="emacs-24.4 -nw"
+alias python="python2.7" #"python" has rich package but "python2.7" is version 2.7.10
 alias active2="source /Users/daiki/pyENV2/bin/activate"
 alias active3="source /Users/daiki/pyENV3/bin/activate"
-alias actpypy="source /Users/daiki/pyEnvpy/bin/activate"
-alias actbrain="source /Users/daiki/brainENV/bin/activate"
-alias py2env="source /Users/daiki/pyENV2/bin/activate && python"
-alias py3env="source /Users/daiki/pyENV3/bin/activate && python"
-alias lsusb="system_profiler SPUSBDataType"
-alias pycat="pygmentize"
+#alias actpypy="source /Users/daiki/pyEnvpy/bin/activate"
+#alias actbrain="source /Users/daiki/brainENV/bin/activate"
+#alias py2env="source /Users/daiki/pyENV2/bin/activate && python"
+#alias py3env="source /Users/daiki/pyENV3/bin/activate && python"
+#alias lsusb="system_profiler SPUSBDataType"
 
 
 # The next line updates PATH for the Google Cloud SDK.
-source '/Users/daiki/google-cloud-sdk/path.zsh.inc'
+#source '/Users/daiki/google-cloud-sdk/path.zsh.inc'
 
 # The next line enables bash completion for gcloud.
-source '/Users/daiki/google-cloud-sdk/completion.zsh.inc'
+#source '/Users/daiki/google-cloud-sdk/completion.zsh.inc'
