@@ -3,6 +3,11 @@
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+
+
 ;;C-hでbackspace
 (keyboard-translate ?\C-h ?\C-?)
 ;;警告音をフラッシュに
@@ -14,14 +19,8 @@
 (require 'auto-complete)
 (require 'auto-complete-config)
 (global-auto-complete-mode t)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
+(add-to-list 'ac-dictionary-directories (concat (getenv "HOME") "/.emacs.d/auto-complete/ac-dict"))
 (ac-config-default)
-
-;;折りたたみ
-(add-hook 'python-mode-hook
-		  '(lambda()
-			 (hs-minor-mode 1)))
-(define-key global-map (kbd "C-x /") 'hs-toggle-hiding)
 
 (require 'highlight-symbol)
 (setq highlight-symbol-colors '("RoyalBlue1" "SpringGreen1" "DeepPink1" "OliveDrab"))
@@ -32,10 +31,10 @@
 (global-auto-highlight-symbol-mode t)
 
 ;;
-(setq-default tab-width 4)
+;(setq-default tab-width 4)
 
 ;;; 日本語環境設定
-(set-language-environment "Japanese")
+;;(set-language-environment "Japanese")
 
 ;;; 列数の表示
 (column-number-mode 1)
@@ -50,11 +49,10 @@
 (set-face-background 'mode-line "blue4")
 
 ;;load-pathに~/.emacs.dを追加
-(setq load-path (cons "~/.emacs.d" load-path))
-(setq load-path (cons "~/.emacs.d/python" load-path))
+;(setq load-path (cons (concat (getenv "HOME") "/.emacs.d") load-path))
 
 ;;color-theme
-(add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
+(add-to-list 'load-path (concat (getenv "HOME") "/.emacs.d/color-theme-6.6.0"))
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-dark-laptop)
@@ -67,8 +65,6 @@
 (require 'paren)
 (show-paren-mode 1)
 
-;;ansi-termの文字化け対策
-(setq locale-coding-system 'utf-8)
 
 ;;対応する括弧に@で移動
 (global-set-key "@" 'match-paren)
@@ -87,41 +83,12 @@
 ;;;カーソルの非選択画面での表示
 (setq cursor-in-non-selected-windows nil)
 
-;; 文字数カウント関数
-(defun count-char-region (start end)
-  (interactive "r")
-  (save-excursion          ;;これと
-    (save-restriction ;;これは オマジナイ。 (ちゃんと調べましょう (爆))
-      (let ((lf-num 0))          ;;改行文字の個数用、初期化している。
-        (goto-char start) ;;指定領域の先頭に行く。
-        (while (re-search-forward "[\n\C-m]" end t) ;;改行文字のカウント
-          (setq lf-num (+ 1 lf-num))) ;;(つまり、 search できる度に 1 足す)
-        (message "%d 文字 (除改行文字) : %d 行 : %d 文字 (含改行文字)"
-                 (- end start lf-num) (count-lines start end) (- end start))))))
-
-;;directry tree
-(require 'popwin)
-(setq display-buffer-function 'popwin:display-buffer)
-(require 'direx)
-(setq direx:leaf-icon "  "
-	  direx:open-icon "▼ "
-	  direx:closed-icon "▶ ")
-(push '(direx:direx-mode :position left :width 25 :dedicated t)
-	  popwin:special-display-config)
-(global-set-key (kbd "C-x j") 'direx:jump-to-directory-other-window)
-
 (global-set-key (kbd "(") 'skeleton-pair-insert-maybe)
 (global-set-key (kbd "{") 'skeleton-pair-insert-maybe)
 (global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
 (global-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
 (global-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
 (setq skeleton-pair 1)
-
-;;yasnippet
-;;(add-to-list 'load-path
-;;			 "~/.emacs.d/plugins/yasnippet")
-;;(require 'yasnippet)
-;;(yas-global-mode 1)
 
 (require 'go-mode-load)
 (require 'go-autocomplete)
@@ -152,21 +119,31 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
-;;js2-mode
-(add-to-list 'load-path "~/.emacs.d")
-(autoload 'js2-mode "js2" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(eval-after-load "js2"
-  '(progn (setq js2-mirror-mode nil)))
+(require 'lua-mode)
+(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+(require 'flymake-lua)
+(add-hook 'lua-mode-hook 'flymake-lua-load)
+
+;(require 'matlab-mode)
+;(add-to-list 'auto-mode-alist '("\\.m$" . matlab-mode))
+
+(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
+(add-hook 'c++-mode-hook
+	  '(lambda()
+	     (c-set-style "stroustrup")
+	     (setq indent-tabs-mode nil)     ; インデントは空白文字で行う（TABコードを空白に変換）
+	     (c-set-offset 'innamespace 0)   ; namespace {}の中はインデントしない
+	     (c-set-offset 'arglist-close 0) ; 関数の引数リストの閉じ括弧はインデントしない
+	     ))
 
 (defun electric-pair ()
   "Insert character pair without sournding spaces"
   (interactive)
   (let (parens-require-spaces)
     (insert-pair)))
-
-(require 'puppet-mode)
-(add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 
 (require 'chef-mode)
 (add-to-list 'auto-mode-alist '("\\.rb$" . puppet-mode))
