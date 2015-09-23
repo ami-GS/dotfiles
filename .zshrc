@@ -55,7 +55,7 @@ export PATH=/sw/bin:/sw/sbin:./:/usr/local/sbin/:$PATH
 export MANPATH=/sw/share/man/ja:/sw/share/man:/usr/share/man:/usr/local/share/man:/opt/X11/share/man:/usr/textbin/man:/Library/Developer/CommandLineTools/usr/share/man:/sw/lib/perl15/5.16.2/man:$MANPATH
 
 #git
-export EDITOR='emacs-24.4 -nw'
+export EDITOR='emacs-24.5 -nw'
 
 #lang
 export LANG=ja_JP.UTF-8
@@ -69,6 +69,7 @@ export LANG=ja_JP.UTF-8
 export GOPATH=$HOME/workspace/Go
 export PATH=$PATH:$GOPATH/bin
 
+
 #lua (for mac)
 export LUA_PATH="/opt/local/share/lua/5.2/?.lua;?.lua"
 export LUA_CPATH="/opt/local/share/lua/5.2/?.so;?.so;/opt/local/share/luarocks/lib/lua/5.2/?.so;"
@@ -80,10 +81,12 @@ export LUA_CPATH="/opt/local/share/lua/5.2/?.so;?.so;/opt/local/share/luarocks/l
 #export NODE_PATH=$npm_dir
 
 #alias
-alias emacs="emacs-24.4 -nw"
+alias emacs="emacs-24.5 -nw"
 alias python="python2.7" #"python" has rich package but "python2.7" is version 2.7.10
 alias active2="source /Users/daiki/pyENV2/bin/activate"
 alias active3="source /Users/daiki/pyENV3/bin/activate"
+#C++ test
+alias cpptest="g++ -I ~/googletest/googletest/include  ~/mybuild/libgtest.a  ~/mybuild/libgtest_main.a"
 #alias actpypy="source /Users/daiki/pyEnvpy/bin/activate"
 #alias actbrain="source /Users/daiki/brainENV/bin/activate"
 #alias py2env="source /Users/daiki/pyENV2/bin/activate && python"
