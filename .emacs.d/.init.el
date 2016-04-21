@@ -89,7 +89,7 @@
 (global-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
 (setq skeleton-pair 1)
 
-(require 'go-mode)
+(require 'go-mode-load)
 (require 'go-autocomplete)
 (add-hook 'go-mode-hook
       '(lambda()
