@@ -29,7 +29,8 @@ HISTSIZE=1000
 SACEHIST=1000
 
 #prompt
-source  /opt/local/share/git/contrib/completion/git-prompt.sh
+source $HOME/dotfiles/git-prompt.sh
+
 GIT_PS1_SHOWDIRTYSTATE=true
 PS1='%F{6}$(__git_ps1) %f%F{3}>> %f'
 PROMPT=$PS1
@@ -55,7 +56,7 @@ export PATH=/sw/bin:/sw/sbin:./:/usr/local/sbin/:$PATH
 export MANPATH=/sw/share/man/ja:/sw/share/man:/usr/share/man:/usr/local/share/man:/opt/X11/share/man:/usr/textbin/man:/Library/Developer/CommandLineTools/usr/share/man:/sw/lib/perl15/5.16.2/man:$MANPATH
 
 #git
-export EDITOR='emacs-24.5 -nw'
+export EDITOR='emacs24 -nw'
 
 #lang
 export LANG=ja_JP.UTF-8
@@ -66,7 +67,8 @@ export LANG=ja_JP.UTF-8
 #export PYTHONPATH=/usr/local/google_appengine/:$PYTHONPATH
 
 #Go
-export GOPATH=$HOME/workspace/Go
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/Go
 export PATH=$PATH:$GOPATH/bin
 
 
@@ -81,7 +83,7 @@ export LUA_CPATH="/opt/local/share/lua/5.2/?.so;?.so;/opt/local/share/luarocks/l
 #export NODE_PATH=$npm_dir
 
 #alias
-alias emacs="emacs-24.5 -nw"
+alias emacs="emacs24 -nw"
 alias python="python2.7" #"python" has rich package but "python2.7" is version 2.7.10
 alias active2="source /Users/daiki/pyENV2/bin/activate"
 alias active3="source /Users/daiki/pyENV3/bin/activate"
