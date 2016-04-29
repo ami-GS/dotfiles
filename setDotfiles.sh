@@ -1,7 +1,8 @@
 if [  "$(uname)" == 'Darwin' ]; then
-    #if type git > /dev/null 2>&1; then
-    #sudo brew install git
-    #fi
+    if type git > /dev/null 2>&1; then
+	# is brew installed as default?
+	sudo brew install git
+    fi
     OS='Mac'
 elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
     if   [  -e /etc/debian_version ] ||
@@ -11,6 +12,7 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	sudo add-apt-repository ppa:ubuntu-lxc/lxd-stable
 	sudo apt-get update
 	sudo apt-get upgrade
+	sudo apt-get install cmake
 	sudo apt-get install golang
 	sudo apt-get install zsh
     fi
@@ -25,6 +27,13 @@ else
   exit 1
 fi
 
+# google test settings
+git clone https://github.com/google/googletest $HOME/googletest
+makedir googletest/googletest/build
+cd googletest/googletest/build
+cmake ..
+make ..
+cd $HOME
 
 cp .tmux.conf $HOME/
 cp .emacs $HOME/
