@@ -88,13 +88,15 @@ alias python="python2.7" #"python" has rich package but "python2.7" is version 2
 alias active2="source /Users/daiki/pyENV2/bin/activate"
 alias active3="source /Users/daiki/pyENV3/bin/activate"
 #C++ test
-alias cpptest="g++ -I ~/googletest/googletest/include  ~/mybuild/libgtest.a  ~/mybuild/libgtest_main.a"
+alias cpptest="c++ -I $HOME/googletest/googletest/include $HOME/googletest/googletest/build/libgtest.a $HOME/googletest/googletest/build/libgtest_main.a"
 #alias actpypy="source /Users/daiki/pyEnvpy/bin/activate"
 #alias actbrain="source /Users/daiki/brainENV/bin/activate"
 #alias py2env="source /Users/daiki/pyENV2/bin/activate && python"
 #alias py3env="source /Users/daiki/pyENV3/bin/activate && python"
 #alias lsusb="system_profiler SPUSBDataType"
 
+#SNAP
+export SNAP_PATH=$HOME/Go/src/github.com/intelsdi-x/snap/build
 
 # The next line updates PATH for the Google Cloud SDK.
 #source '/Users/daiki/google-cloud-sdk/path.zsh.inc'
