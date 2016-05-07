@@ -2,6 +2,7 @@ if [  "$(uname)" == 'Darwin' ]; then
     if type git > /dev/null 2>&1; then
 	# is brew installed as default?
 	sudo brew install git
+	sudo brew install tig
     fi
     OS='Mac'
 elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
@@ -9,15 +10,16 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
          [  -e /etc/debian_release ]; then
         # Check Ubuntu or Debian
 	# for golang
-	sudo add-apt-repository ppa:ubuntu-lxc/lxd-stable
+	sudo add-apt-repository -y ppa:ubuntu-lxc/lxd-stable
 	sudo apt-get update
-	sudo apt-get upgrade
-	sudo apt-get install cmake
-	sudo apt-get install golang
-	sudo apt-get install zsh
+	sudo apt-get upgrade -Y
+	sudo apt-get install -y cmake
+	sudo apt-get install -y golang
+	sudo apt-get install -y zsh
     fi
     if type git > /dev/null 2>&1; then
-	sudo apt-get install git
+	sudo apt-get install -y git
+	sudo apt-get install -y tig
     fi
     OS='Linux'
 elif [  "$(expr substr $(uname -s) 1 10)" == 'MINGW32_NT' ]; then
@@ -33,11 +35,11 @@ makedir googletest/googletest/build
 cd googletest/googletest/build
 cmake ..
 make ..
-cd $HOME
+cd $HOME/dotfiles
 
 cp .tmux.conf $HOME/
 cp .emacs $HOME/
 cp -r .emacs.d $HOME/
 wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-chsh -s /usr/bin/zsh
+sudo chsh -s /usr/bin/zsh
 cp .zshrc $HOME/
