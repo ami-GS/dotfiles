@@ -12,7 +12,7 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	# for golang
 	sudo add-apt-repository -y ppa:ubuntu-lxc/lxd-stable
 	sudo apt-get update
-	sudo apt-get upgrade -Y
+	sudo apt-get upgrade -y
 	sudo apt-get install -y cmake
 	sudo apt-get install -y golang
 	sudo apt-get install -y zsh
