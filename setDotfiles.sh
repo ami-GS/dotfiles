@@ -1,25 +1,19 @@
 if [  "$(uname)" == 'Darwin' ]; then
     if type git > /dev/null 2>&1; then
 	# is brew installed as default?
-	sudo brew install git
-	sudo brew install tig
+	sudo brew install git tig
     fi
     OS='Mac'
 elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
     if   [  -e /etc/debian_version ] ||
-         [  -e /etc/debian_release ]; then
-        # Check Ubuntu or Debian
+         [  -e /etc/debian_release ] ||
+	 [  -e /etc/SuSE-release   ]}; then
+        # Check Ubuntu, Debian or SuSE
 	# for golang
 	sudo add-apt-repository -y ppa:ubuntu-lxc/lxd-stable
 	sudo apt-get update
 	sudo apt-get upgrade -y
-	sudo apt-get install -y cmake
-	sudo apt-get install -y golang
-	sudo apt-get install -y zsh
-    fi
-    if type git > /dev/null 2>&1; then
-	sudo apt-get install -y git
-	sudo apt-get install -y tig
+	sudo apt-get install -y cmake zsh golang git tig tmux
     fi
     OS='Linux'
 elif [  "$(expr substr $(uname -s) 1 10)" == 'MINGW32_NT' ]; then
