@@ -7,13 +7,19 @@ if [  "$(uname)" == 'Darwin' ]; then
 elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
     if   [  -e /etc/debian_version ] ||
          [  -e /etc/debian_release ] ||
-	 [  -e /etc/SuSE-release   ]}; then
+	 [  -e /etc/SuSE-release   ]; then
         # Check Ubuntu, Debian or SuSE
 	# for golang
 	sudo add-apt-repository -y ppa:ubuntu-lxc/lxd-stable
 	sudo apt-get update
 	sudo apt-get upgrade -y
 	sudo apt-get install -y cmake zsh golang git tig tmux
+	if [  -e /etc/SuSE-release ]; then
+	    sudo apt-get install -y go
+	else
+	    sudo apt-get install -y golang
+	fi
+
     fi
     OS='Linux'
 elif [  "$(expr substr $(uname -s) 1 10)" == 'MINGW32_NT' ]; then
