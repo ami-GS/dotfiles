@@ -19,7 +19,11 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	else
 	    sudo apt-get install -y golang
 	fi
-
+    elif [  -e /etc/redhat-release ]; then
+	# rhel, centos
+	sudo yum update
+	sudo yum upgrade -y
+	# later will be written
     fi
     OS='Linux'
 elif [  "$(expr substr $(uname -s) 1 10)" == 'MINGW32_NT' ]; then
