@@ -13,7 +13,7 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	sudo add-apt-repository -y ppa:ubuntu-lxc/lxd-stable
 	sudo apt-get update
 	sudo apt-get upgrade -y
-	sudo apt-get install -y cmake zsh golang git tig tmux
+	sudo apt-get install -y cmake zsh golang git tig tmux ncurses-dev
 	if [  -e /etc/SuSE-release ]; then
 	    sudo apt-get install -y go
 	else
@@ -42,6 +42,12 @@ make ..
 cd $HOME/dotfiles
 
 cp .tmux.conf $HOME/
+wget http://tamacom.com/global/global-6.5.6.tar.gz #need to be latest
+tar -zxvf global-6.5.6.tar.gz
+cd global-6.5.6
+./configure; make; make install
+cd ../
+
 cp .emacs $HOME/
 cp -r .emacs.d $HOME/
 wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh

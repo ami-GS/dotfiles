@@ -82,6 +82,17 @@
 ;;;カーソルの非選択画面での表示
 (setq cursor-in-non-selected-windows nil)
 
+(add-to-list 'load-path "/usr/local/share/gtags")
+(autoload 'gtags-mode "gtags" "" t)
+(setq gtags-mode-hook
+      '(lambda ()
+	 (local-set-key "\M-t" 'gtags-find-tag)    ; jump to func
+	 (local-set-key "\M-r" 'gtags-find-rtag)   ; jump back
+	 (local-set-key "\M-s" 'gtags-find-symbol) ; jump to symbol
+	 (local-set-key "\C-t" 'gtags-pop-stack)   ; back to prev buff
+	 ))
+
+
 (global-set-key (kbd "(") 'skeleton-pair-insert-maybe)
 (global-set-key (kbd "{") 'skeleton-pair-insert-maybe)
 (global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
@@ -137,12 +148,11 @@
 	     (c-set-offset 'innamespace 0)   ; namespace {}の中はインデントしない
 	     (c-set-offset 'arglist-close 0) ; 関数の引数リストの閉じ括弧はインデントしない
 	     ))
+(add-hook 'c++-mode-hook 'gtags-mode)
+(add-hook 'c-mode-hook 'gtags-mode)
 
 (defun electric-pair ()
   "Insert character pair without sournding spaces"
   (interactive)
   (let (parens-require-spaces)
     (insert-pair)))
-
-;(require 'chef-mode)
-;(add-to-list 'auto-mode-alist '("\\.rb$" . puppet-mode))
