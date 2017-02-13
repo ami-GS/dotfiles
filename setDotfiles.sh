@@ -13,7 +13,8 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	sudo add-apt-repository -y ppa:ubuntu-lxc/lxd-stable
 	sudo apt-get update
 	sudo apt-get upgrade -y
-	sudo apt-get install -y cmake zsh golang git tig tmux ncurses-dev
+	sudo apt-get install -y cmake zsh golang git tig tmux \
+	     exuberant-ctags python-pygments python3-pygments ncurses-dev
 	if [  -e /etc/SuSE-release ]; then
 	    sudo apt-get install -y go
 	else

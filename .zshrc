@@ -76,11 +76,9 @@ export PATH=$PATH:$GOPATH/bin
 export LUA_PATH="/opt/local/share/lua/5.2/?.lua;?.lua"
 export LUA_CPATH="/opt/local/share/lua/5.2/?.so;?.so;/opt/local/share/luarocks/lib/lua/5.2/?.so;"
 
-#node
-#[[ -s /Users/daiki/.nvm/nvm.sh ]] && . /Users/daiki/.nvm/nvm.sh
-#nvm use v0.10.26
-#npm_dir=${NVM_PATH}_modules
-#export NODE_PATH=$npm_dir
+# for gtags use, not only default langages.
+export GTAGSCONF=/usr/local/share/gtags/gtags.conf
+export GTAGSLABEL=pygments
 
 #alias
 alias emacs="emacs24 -nw"

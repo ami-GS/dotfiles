@@ -103,14 +103,16 @@
 (require 'go-mode)
 (require 'go-autocomplete)
 (add-hook 'go-mode-hook
-      '(lambda()
-         (setq c-basic-offset 4)
-         (setq indent-tabs-mode t)
-         (local-set-key (kbd "M-.") 'godef-jump)
-         (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
-         (local-set-key (kbd "C-c i") 'go-goto-imports)
-         (local-set-key (kbd "C-c d") 'godoc)
-		 (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)))
+	  '(lambda()
+	     (setq c-basic-offset 4)
+	     (setq indent-tabs-mode t)
+	     (local-set-key (kbd "M-.") 'godef-jump)
+	     (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
+	     (local-set-key (kbd "C-c i") 'go-goto-imports)
+	     (local-set-key (kbd "C-c d") 'godoc)
+	     (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
+	     (gtags-mode 1)
+	     ))
 (add-hook 'before-save-hook 'gofmt-before-save)
 (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 
@@ -119,12 +121,13 @@
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 (autoload 'python-mode "python-mode" "Python editing mode." t)
 (add-hook 'python-mode-hook
-		  '(lambda ()
-					  (setq indent-tabs-mode nil)
-					  (setq indent-level 4)
-					  (setq python-indent 4)
-					  (setq tab-width 4)
-					  ))
+	  '(lambda ()
+	     (setq indent-tabs-mode nil)
+	     (setq indent-level 4)
+	     (setq python-indent 4)
+	     (setq tab-width 4)
+	     (gtags-mode 1)
+	     ))
 
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
@@ -147,8 +150,8 @@
 	     (setq indent-tabs-mode nil)     ; インデントは空白文字で行う（TABコードを空白に変換）
 	     (c-set-offset 'innamespace 0)   ; namespace {}の中はインデントしない
 	     (c-set-offset 'arglist-close 0) ; 関数の引数リストの閉じ括弧はインデントしない
+	     (gtags-mode 1)
 	     ))
-(add-hook 'c++-mode-hook 'gtags-mode)
 (add-hook 'c-mode-hook 'gtags-mode)
 
 (defun electric-pair ()
