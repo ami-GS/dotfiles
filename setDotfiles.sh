@@ -24,6 +24,8 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	# rhel, centos
 	sudo yum update
 	sudo yum upgrade -y
+	sudo yum install -y zsh cmake git tig tmux ctags-etags \
+	     python-pygments ncurses-devel ncurses
 	# later will be written
     fi
     OS='Linux'
@@ -46,11 +48,11 @@ cp .tmux.conf $HOME/
 wget http://tamacom.com/global/global-6.5.6.tar.gz #need to be latest
 tar -zxvf global-6.5.6.tar.gz
 cd global-6.5.6
-./configure; make; make install
+sudo ./configure; sudo make; sudo make install
 cd ../
 
 cp .emacs $HOME/
 cp -r .emacs.d $HOME/
 wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-sudo chsh -s /usr/bin/zsh
+chsh -s /bin/zsh
 cp .zshrc $HOME/
