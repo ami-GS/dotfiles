@@ -26,7 +26,6 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	sudo yum upgrade -y
 	sudo yum install -y zsh cmake git tig tmux ctags-etags \
 	     python-pygments ncurses-devel ncurses
-	# later will be written
     fi
     OS='Linux'
 elif [  "$(expr substr $(uname -s) 1 10)" == 'MINGW32_NT' ]; then
@@ -37,22 +36,29 @@ else
 fi
 
 # google test settings
-git clone https://github.com/google/googletest $HOME/googletest
-makedir googletest/googletest/build
-cd googletest/googletest/build
-cmake ..
-make ..
-cd $HOME/dotfiles
+if [ ! -e $HOME/googletest ]; then
+   git clone https://github.com/google/googletest $HOME/googletest
+   makedir googletest/googletest/build
+   cd googletest/googletest/build
+   cmake ..
+   make ..
+fi
 
+cd $HOME/dotfiles
 cp .tmux.conf $HOME/
-wget http://tamacom.com/global/global-6.5.6.tar.gz #need to be latest
-tar -zxvf global-6.5.6.tar.gz
-cd global-6.5.6
-sudo ./configure; sudo make; sudo make install
-cd ../
+
+if [ ! -e global* ]; then
+   wget http://tamacom.com/global/global-6.5.6.tar.gz #need to be latest
+   tar -zxvf global-6.5.6.tar.gz
+   cd global-6.5.6
+   sudo ./configure; sudo make; sudo make install
+   cd ../
+fi
 
 cp .emacs $HOME/
 cp -r .emacs.d $HOME/
-wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+if [ ! -e git-prompt.sh ]; then
+    wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+fi
 chsh -s /bin/zsh
 cp .zshrc $HOME/
