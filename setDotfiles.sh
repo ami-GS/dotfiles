@@ -62,3 +62,11 @@ if [ ! -e git-prompt.sh ]; then
 fi
 chsh -s /bin/zsh
 cp .zshrc $HOME/
+
+
+if [ "$*" == "--xwindow" ]; then
+    OUT=$(grep X11Forwarding /etc/ssh/sshd_config | grep -o yes)
+    if [ "$OUT" != "yes" ]; then
+	sudo sed -i -e 's/X11Forwarding no/X11Forwarding yes/g' /etc/ssh/sshd_config
+    fi
+fi
