@@ -21,13 +21,15 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	    sudo apt-get install -y golang
 	fi
     elif [  -e /etc/redhat-release ]; then
-	sudo echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
+	su -mp
+	echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
+	exit
 	# rhel, centos
-	sudo yum epel-release
-	sudo yum update
+	sudo yum epel-release -y
+	sudo yum update -y
 	sudo yum upgrade -y
-	sudo yum install -y zsh cmake git tig tmux ctags-etags \
-	     python-pygments ncurses-devel ncurses
+	sudo yum install -y zsh cmake git tig ctags-etags \
+	     python-pygments ncurses-devel ncurses wget
     fi
     OS='Linux'
 elif [  "$(expr substr $(uname -s) 1 10)" == 'MINGW32_NT' ]; then
@@ -44,17 +46,24 @@ if [ ! -e $HOME/googletest ]; then
    cd googletest/googletest/build
    cmake ..
    make ..
+   cd $HOME/dotfiles
 fi
 
-cd $HOME/dotfiles
-cp .tmux.conf $HOME/
+
+if [ ! -e tmux ];then
+    git clone https://github.com/tmux/tmux
+    cd tmux
+    ./configure && make && sudo make install
+    cd $HOME/dotfiles
+    cp .tmux.conf $HOME/
+fi
 
 if [ ! -e global* ]; then
    wget http://tamacom.com/global/global-6.5.6.tar.gz #need to be latest
    tar -zxvf global-6.5.6.tar.gz
    cd global-6.5.6
    sudo ./configure; sudo make; sudo make install
-   cd ../
+   cd $HOME/dotfiles
 fi
 
 cp .emacs $HOME/
@@ -62,7 +71,7 @@ cp -r .emacs.d $HOME/
 if [ ! -e git-prompt.sh ]; then
     wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 fi
-sudo chsh -s /bin/zsh
+sudo chsh -s /bin/zsh $USER
 cp .zshrc $HOME/
 
 
