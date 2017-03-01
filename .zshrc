@@ -56,7 +56,7 @@ export PATH=/sw/bin:/sw/sbin:./:/usr/local/sbin/:$PATH
 export MANPATH=/sw/share/man/ja:/sw/share/man:/usr/share/man:/usr/local/share/man:/opt/X11/share/man:/usr/textbin/man:/Library/Developer/CommandLineTools/usr/share/man:/sw/lib/perl15/5.16.2/man:$MANPATH
 
 #git
-export EDITOR='emacs24 -nw'
+export EDITOR='emacs -nw'
 
 #lang
 export LANG=ja_JP.UTF-8
@@ -81,7 +81,7 @@ export GTAGSCONF=/usr/local/share/gtags/gtags.conf
 export GTAGSLABEL=pygments
 
 #alias
-alias emacs="emacs24 -nw"
+alias emacs="emacs -nw"
 alias python="python2.7" #"python" has rich package but "python2.7" is version 2.7.10
 alias active2="source /Users/daiki/pyENV2/bin/activate"
 alias active3="source /Users/daiki/pyENV3/bin/activate"

@@ -21,7 +21,9 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	    sudo apt-get install -y golang
 	fi
     elif [  -e /etc/redhat-release ]; then
+	sudo echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
 	# rhel, centos
+	sudo yum epel-release
 	sudo yum update
 	sudo yum upgrade -y
 	sudo yum install -y zsh cmake git tig tmux ctags-etags \
@@ -38,7 +40,7 @@ fi
 # google test settings
 if [ ! -e $HOME/googletest ]; then
    git clone https://github.com/google/googletest $HOME/googletest
-   makedir googletest/googletest/build
+   mkdir googletest/googletest/build
    cd googletest/googletest/build
    cmake ..
    make ..
@@ -60,7 +62,7 @@ cp -r .emacs.d $HOME/
 if [ ! -e git-prompt.sh ]; then
     wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 fi
-chsh -s /bin/zsh
+sudo chsh -s /bin/zsh
 cp .zshrc $HOME/
 
 
