@@ -59,7 +59,8 @@ export MANPATH=/sw/share/man/ja:/sw/share/man:/usr/share/man:/usr/local/share/ma
 export EDITOR='emacs -nw'
 
 #lang
-export LANG=ja_JP.UTF-8
+export locale=en_US.UTF-8
+#export LANG=ja_JP.UTF-8
 
 #google_appengine
 #export PATH=/usr/local/google_appengine/:$PATH
@@ -92,6 +93,7 @@ alias cpptest="c++ -I $HOME/googletest/googletest/include $HOME/googletest/googl
 #alias py2env="source /Users/daiki/pyENV2/bin/activate && python"
 #alias py3env="source /Users/daiki/pyENV3/bin/activate && python"
 #alias lsusb="system_profiler SPUSBDataType"
+alias ls='ls --color=auto'
 
 #SNAP
 export SNAP_PATH=$HOME/Go/src/github.com/intelsdi-x/snap/build

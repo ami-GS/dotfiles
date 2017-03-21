@@ -13,7 +13,7 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	sudo add-apt-repository -y ppa:ubuntu-lxc/lxd-stable
 	sudo apt-get update
 	sudo apt-get upgrade -y
-	sudo apt-get install -y cmake zsh golang git tig tmux \
+	sudo apt-get install -y cmake zsh golang git tig automake \
 	     exuberant-ctags python-pygments python3-pygments ncurses-dev
 	if [  -e /etc/SuSE-release ]; then
 	    sudo apt-get install -y go
@@ -21,15 +21,15 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	    sudo apt-get install -y golang
 	fi
     elif [  -e /etc/redhat-release ]; then
-	su -mp
-	echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
-	exit
+	#su -mp # currently do manually
+	#echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
+	#exit
 	# rhel, centos
-	sudo yum epel-release -y
+	sudo yum install epel-release -y
 	sudo yum update -y
 	sudo yum upgrade -y
-	sudo yum install -y zsh cmake git tig ctags-etags \
-	     python-pygments ncurses-devel ncurses wget
+	sudo yum install -y zsh cmake git tig ctags-etags libevent \
+	     python-pygments ncurses-devel ncurses wget automake libevent-devel
     fi
     OS='Linux'
 elif [  "$(expr substr $(uname -s) 1 10)" == 'MINGW32_NT' ]; then
@@ -53,8 +53,11 @@ fi
 if [ ! -e tmux ];then
     git clone https://github.com/tmux/tmux
     cd tmux
-    ./configure && make && sudo make install
+    sh autogen.sh
+    ./configure
+    make
     cd $HOME/dotfiles
+    sudo ln -s $HOME/dotfiles/tmux/tmux /usr/bin/tmux
     cp .tmux.conf $HOME/
 fi
 
