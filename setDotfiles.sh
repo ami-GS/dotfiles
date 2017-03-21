@@ -21,9 +21,6 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	    sudo apt-get install -y golang
 	fi
     elif [  -e /etc/redhat-release ]; then
-	#su -mp # currently do manually
-	#echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
-	#exit
 	# rhel, centos
 	sudo yum install epel-release -y
 	sudo yum update -y
