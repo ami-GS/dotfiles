@@ -25,7 +25,7 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	sudo yum install epel-release -y
 	sudo yum update -y
 	sudo yum upgrade -y
-	sudo yum install -y zsh cmake git tig ctags-etags libevent \
+	sudo yum install -y zsh cmake git tig ctags-etags libevent gcc gcc-c++ \
 	     python-pygments ncurses-devel ncurses wget automake libevent-devel
     fi
     OS='Linux'
@@ -41,8 +41,7 @@ if [ ! -e $HOME/googletest ]; then
    git clone https://github.com/google/googletest $HOME/googletest
    mkdir googletest/googletest/build
    cd googletest/googletest/build
-   cmake ..
-   make ..
+   cmake .. && make ..
    cd $HOME/dotfiles
 fi
 
@@ -50,9 +49,7 @@ fi
 if [ ! -e tmux ];then
     git clone https://github.com/tmux/tmux
     cd tmux
-    sh autogen.sh
-    ./configure
-    make
+    sh autogen.sh && ./configure && make
     cd $HOME/dotfiles
     sudo ln -s $HOME/dotfiles/tmux/tmux /usr/bin/tmux
     cp .tmux.conf $HOME/
@@ -62,7 +59,7 @@ if [ ! -e global* ]; then
    wget http://tamacom.com/global/global-6.5.6.tar.gz #need to be latest
    tar -zxvf global-6.5.6.tar.gz
    cd global-6.5.6
-   sudo ./configure; sudo make; sudo make install
+   sudo ./configure && sudo make && sudo make install
    cd $HOME/dotfiles
 fi
 
