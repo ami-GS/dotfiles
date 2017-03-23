@@ -1,3 +1,15 @@
+while getopts cp: OPT
+do
+    case $OPT in
+	"p" ) PROXY="TRUE" ; PROXY_VALUE="$OPTARG" ;;
+    esac
+done
+
+if [ "$PROXY" = "TRUE" ]; then
+    #this includes git install
+    sudo python set_proxy.py PROXY_VALUE
+fi
+
 if [  "$(uname)" == 'Darwin' ]; then
     if type git > /dev/null 2>&1; then
 	# is brew installed as default?
