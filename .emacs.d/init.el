@@ -8,26 +8,16 @@
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 
 
+;;フリンジの色の変更
+(set-face-background 'fringe "gray20")
+(set-face-foreground 'mode-line "white")
+(set-face-background 'mode-line "blue4")
+
 ;;C-hでbackspace
 (keyboard-translate ?\C-h ?\C-?)
 ;;警告音をフラッシュに
 (setq visible-bell t)
 (setq make-backup-files nil)
-
-;;;; auto-complete
-(require 'auto-complete)
-(require 'auto-complete-config)
-(global-auto-complete-mode t)
-(add-to-list 'ac-dictionary-directories (concat (getenv "HOME") "/.emacs.d/auto-complete/ac-dict"))
-(ac-config-default)
-
-(require 'highlight-symbol)
-(setq highlight-symbol-colors '("RoyalBlue1" "SpringGreen1" "DeepPink1" "OliveDrab"))
-(global-set-key (kbd "<f3>") 'highlight-symbol-at-point)
-(global-set-key (kbd "ESC <f3>") 'highlight-symbol-remove-all)
-
-(require 'auto-highlight-symbol)
-(global-auto-highlight-symbol-mode t)
 
 ;;
 ;(setq-default tab-width 4)
@@ -35,49 +25,12 @@
 ;;; 日本語環境設定
 ;;(set-language-environment "Japanese")
 
-;;; 列数の表示
-(column-number-mode 1)
-
 ;; 行番号表示
 (require 'linum)
 (global-linum-mode)
 
-;;フリンジの色の変更
-(set-face-background 'fringe "gray20")
-(set-face-foreground 'mode-line "white")
-(set-face-background 'mode-line "blue4")
-
-;;load-pathに~/.emacs.dを追加
-;(setq load-path (cons (concat (getenv "HOME") "/.emacs.d") load-path))
-
-;;color-theme
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-dark-laptop)
-(color-theme-billw)
-;;
-(global-hl-line-mode t)
-(require 'col-highlight)
-(column-highlight-mode t)
-
-;;対応する括弧に色をつける
-(require 'paren)
-(show-paren-mode 1)
-
-
-;;対応する括弧に@で移動
-(global-set-key "@" 'match-paren)
-(defun match-paren (arg)
-  "Go to the matching paren if on a paren; otherwise insert %."
-  (interactive "p")
-  (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
-                ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
-                (t (self-insert-command (or arg 1)))))
-
-
-;;;滑らかスクロール
-(require 'smooth-scroll)
-(smooth-scroll-mode t)
+;;; 列数の表示
+(column-number-mode 1)
 
 ;;;カーソルの非選択画面での表示
 (setq cursor-in-non-selected-windows nil)
@@ -99,6 +52,59 @@
 (global-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
 (global-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
 (setq skeleton-pair 1)
+
+(defun electric-pair ()
+  "Insert character pair without sournding spaces"
+  (interactive)
+  (let (parens-require-spaces)
+    (insert-pair)))
+
+;;対応する括弧に色をつける
+(require 'paren)
+(show-paren-mode 1)
+
+;;;; auto-complete
+(require 'auto-complete)
+(require 'auto-complete-config)
+(global-auto-complete-mode t)
+(add-to-list 'ac-dictionary-directories (concat (getenv "HOME") "/.emacs.d/auto-complete/ac-dict"))
+(ac-config-default)
+
+(require 'highlight-symbol)
+(setq highlight-symbol-colors '("RoyalBlue1" "SpringGreen1" "DeepPink1" "OliveDrab"))
+(global-set-key (kbd "<f3>") 'highlight-symbol-at-point)
+(global-set-key (kbd "ESC <f3>") 'highlight-symbol-remove-all)
+
+(require 'auto-highlight-symbol)
+(global-auto-highlight-symbol-mode t)
+
+;;load-pathに~/.emacs.dを追加
+;(setq load-path (cons (concat (getenv "HOME") "/.emacs.d") load-path))
+
+;;color-theme
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-dark-laptop)
+(color-theme-billw)
+;;
+(global-hl-line-mode t)
+(require 'col-highlight)
+(column-highlight-mode t)
+
+
+;;対応する括弧に@で移動
+(global-set-key "@" 'match-paren)
+(defun match-paren (arg)
+  "Go to the matching paren if on a paren; otherwise insert %."
+  (interactive "p")
+  (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
+                ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+                (t (self-insert-command (or arg 1)))))
+
+
+;;;滑らかスクロール
+(require 'smooth-scroll)
+(smooth-scroll-mode t)
 
 (require 'go-mode)
 (require 'go-autocomplete)
@@ -132,14 +138,6 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
-;(require 'lua-mode)
-;(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
-;(require 'flymake-lua)
-;(add-hook 'lua-mode-hook 'flymake-lua-load)
-
-;(require 'matlab-mode)
-;(add-to-list 'auto-mode-alist '("\\.m$" . matlab-mode))
-
 (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
@@ -153,9 +151,3 @@
 	     (gtags-mode 1)
 	     ))
 (add-hook 'c-mode-hook 'gtags-mode)
-
-(defun electric-pair ()
-  "Insert character pair without sournding spaces"
-  (interactive)
-  (let (parens-require-spaces)
-    (insert-pair)))
