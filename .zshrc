@@ -60,22 +60,11 @@ export EDITOR='emacs -nw'
 
 #lang
 export locale=en_US.UTF-8
-#export LANG=ja_JP.UTF-8
-
-#google_appengine
-#export PATH=/usr/local/google_appengine/:$PATH
-#export PATH=$HOME/google-cloud-sdk/platform/go_appengine/:$PATH
-#export PYTHONPATH=/usr/local/google_appengine/:$PYTHONPATH
 
 #Go
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/Go
 export PATH=$PATH:$GOPATH/bin
-
-
-#lua (for mac)
-export LUA_PATH="/opt/local/share/lua/5.2/?.lua;?.lua"
-export LUA_CPATH="/opt/local/share/lua/5.2/?.so;?.so;/opt/local/share/luarocks/lib/lua/5.2/?.so;"
 
 # for gtags use, not only default langages.
 export GTAGSCONF=/usr/local/share/gtags/gtags.conf
@@ -88,18 +77,7 @@ alias active2="source /Users/daiki/pyENV2/bin/activate"
 alias active3="source /Users/daiki/pyENV3/bin/activate"
 #C++ test
 alias cpptest="c++ -I $HOME/googletest/googletest/include $HOME/googletest/googletest/build/libgtest.a $HOME/googletest/googletest/build/libgtest_main.a"
-#alias actpypy="source /Users/daiki/pyEnvpy/bin/activate"
-#alias actbrain="source /Users/daiki/brainENV/bin/activate"
-#alias py2env="source /Users/daiki/pyENV2/bin/activate && python"
-#alias py3env="source /Users/daiki/pyENV3/bin/activate && python"
-#alias lsusb="system_profiler SPUSBDataType"
 alias ls='ls --color=auto'
 
 #SNAP
 export SNAP_PATH=$HOME/Go/src/github.com/intelsdi-x/snap/build
-
-# The next line updates PATH for the Google Cloud SDK.
-#source '/Users/daiki/google-cloud-sdk/path.zsh.inc'
-
-# The next line enables bash completion for gcloud.
-#source '/Users/daiki/google-cloud-sdk/completion.zsh.inc'
