@@ -8,4 +8,6 @@ su -mp #if this is needed
 echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
 exit
 bash ./setDotfiles.sh
+# if you need proxy in your environment
+bash ./setDotfiles.sh -p 'address:port'
 ```
