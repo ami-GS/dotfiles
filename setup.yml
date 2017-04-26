@@ -1,0 +1,59 @@
+---
+- hosts: localhost
+  vars:
+    my_home: "{{ lookup('env', 'HOME') }}"
+    pwd:     "{{ lookup('env', 'HOME') }}"
+  become: yes
+  tasks:
+    - name: install yum packages
+      when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
+      yum: name="{{ item }}" state=latest
+      with_items:
+        - epel-release
+        - zsh
+        - cmake
+        - git
+        - tig
+        - ctags-etags
+        - libevent
+        - gcc
+        - gcc-c++
+        - python-pygments
+        - ncurses-devel
+        - ncurses
+        - wget
+        - automake
+        - libevent-devel
+
+    - name: install apt packages
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+      apt: name="{{ item }}" state=latest
+      with_items:
+        - zsh
+
+    - name: install tmux from GitHub
+      git: repo=https://github.com/tmux/tmux dest="{{ my_home }}/dotfiles/tmux"
+
+    - name: build tmux
+      command: source autogen.sh && ./configure && make
+      args:
+        chdir: "{{ pwd }}/tmux"
+
+    - name: copy dots
+      copy: src="{{ pwd }}/.tmux.conf" dest="{{ my_home }}/.tmux.conf"
+      copy: src="{{ pwd }}/.emacs" dest="{{ my_home }}/.emacs"
+      copy: src="{{ pwd }}/.emacs.d" dest="{{ my_home }}/.emacs.d directory_mode=yes"
+      copy: src="{{ pwd }}/.zshrc" dest="{{ my_home }}/.zshrc"
+
+    - name: get files
+      get_url:
+        url: http://tamacom.com/global/global-6.5.6.tar.gz
+        dest: "{{ pwd }}/"
+      get_url:
+        url: https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+        dest: "{{ pwp }}/"
+      
+     
+        
+        
+      
