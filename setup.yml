@@ -2,7 +2,6 @@
 - hosts: localhost
   vars:
     my_home: "{{ lookup('env', 'HOME') }}"
-    pwd:     "{{ lookup('env', 'HOME') }}"
   become: yes
   tasks:
     - name: install yum packages
@@ -30,28 +29,37 @@
       apt: name="{{ item }}" state=latest
       with_items:
         - zsh
+        - libevent-dev
 
-    - name: install tmux from GitHub
+    - name: clone tmux from GitHub
       git: repo=https://github.com/tmux/tmux dest="{{ my_home }}/dotfiles/tmux"
 
-    - name: build tmux
-      command: source autogen.sh && ./configure && make
+    - name: configure tmux
+      command: "{{ item }}"
       args:
-        chdir: "{{ pwd }}/tmux"
+        chdir: "{{ my_home }}/dotfiles/tmux"
+      with_items:
+        - "sh ./autogen.sh"
+        - "./configure"
+        - "make"
 
     - name: copy dots
-      copy: src="{{ pwd }}/.tmux.conf" dest="{{ my_home }}/.tmux.conf"
-      copy: src="{{ pwd }}/.emacs" dest="{{ my_home }}/.emacs"
-      copy: src="{{ pwd }}/.emacs.d" dest="{{ my_home }}/.emacs.d directory_mode=yes"
-      copy: src="{{ pwd }}/.zshrc" dest="{{ my_home }}/.zshrc"
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      with_items:
+        - {src: "{{ my_home }}/dotfiles/.tmux.conf", dest: "{{ my_home }}/.tmux.conf"}
+        - {src: "{{ my_home }}/dotfiles/.emacs", dest: "{{ my_home }}/.emacs"}
+        - {src: "{{ my_home }}/dotfiles/.emacs.d", dest: "{{ my_home }}/.emacs.d directory_mode=yes"}
+        - {src: "{{ my_home }}/dotfiles/.zshrc", dest: "{{ my_home }}/.zshrc"}
 
     - name: get files
       get_url:
-        url: http://tamacom.com/global/global-6.5.6.tar.gz
-        dest: "{{ pwd }}/"
-      get_url:
-        url: https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-        dest: "{{ pwp }}/"
+        url: "{{ item.url }}"
+        dest: "{{ item.dest }}"
+      with_items:
+        - {url: "http://tamacom.com/global/global-6.5.6.tar.gz", dest: "{{ my_home }}/dotfiles/"}
+        - {url: "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh",  dest: "{{ my_home }}/dotfiles/"}
       
      
         
