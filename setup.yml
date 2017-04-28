@@ -30,6 +30,16 @@
       with_items:
         - zsh
         - libevent-dev
+        - cmake
+        - git
+        - tig
+        - gcc
+        - g++
+        - python-pygments
+        - ncurses
+        - ncurses-dev
+        - wget
+        - automake
 
     - name: clone tmux from GitHub
       git: repo=https://github.com/tmux/tmux dest="{{ my_home }}/dotfiles/tmux"
@@ -60,8 +70,3 @@
       with_items:
         - {url: "http://tamacom.com/global/global-6.5.6.tar.gz", dest: "{{ my_home }}/dotfiles/"}
         - {url: "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh",  dest: "{{ my_home }}/dotfiles/"}
-      
-     
-        
-        
-      
