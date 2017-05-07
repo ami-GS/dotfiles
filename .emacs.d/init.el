@@ -7,7 +7,6 @@
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 
-
 ;;フリンジの色の変更
 (set-face-background 'fringe "gray20")
 (set-face-foreground 'mode-line "white")
@@ -24,6 +23,7 @@
 
 ;;; 日本語環境設定
 ;;(set-language-environment "Japanese")
+
 
 ;; 行番号表示
 (require 'linum)
@@ -45,7 +45,6 @@
 	 (local-set-key "\C-t" 'gtags-pop-stack)   ; back to prev buff
 	 ))
 
-
 (global-set-key (kbd "(") 'skeleton-pair-insert-maybe)
 (global-set-key (kbd "{") 'skeleton-pair-insert-maybe)
 (global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
@@ -66,9 +65,14 @@
 ;;;; auto-complete
 (require 'auto-complete)
 (require 'auto-complete-config)
-(global-auto-complete-mode t)
-(add-to-list 'ac-dictionary-directories (concat (getenv "HOME") "/.emacs.d/auto-complete/ac-dict"))
 (ac-config-default)
+(setq ac-use-menu-map t)
+(setq ac-use-fuzzy t)
+(add-to-list 'ac-modes 'text-mode)
+(add-to-list 'ac-modes 'fundamental-mode)
+(global-auto-complete-mode t)
+;(add-to-list 'ac-dictionary-directories (concat (getenv "HOME") "/.emacs.d/auto-complete/ac-dict"))
+(setq popup-use-optimized-column-computation nil)
 
 (require 'highlight-symbol)
 (setq highlight-symbol-colors '("RoyalBlue1" "SpringGreen1" "DeepPink1" "OliveDrab"))
