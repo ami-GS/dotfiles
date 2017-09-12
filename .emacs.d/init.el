@@ -62,17 +62,42 @@
 (require 'paren)
 (show-paren-mode 1)
 
-;;;; auto-complete
-(require 'auto-complete)
-(require 'auto-complete-config)
-(ac-config-default)
-(setq ac-use-menu-map t)
-(setq ac-use-fuzzy t)
-(add-to-list 'ac-modes 'text-mode)
-(add-to-list 'ac-modes 'fundamental-mode)
-(global-auto-complete-mode t)
-;(add-to-list 'ac-dictionary-directories (concat (getenv "HOME") "/.emacs.d/auto-complete/ac-dict"))
-(setq popup-use-optimized-column-computation nil)
+(when (locate-library "company")
+  (setq company-idle-delay 0) ; デフォルトは0.5
+  (setq company-minimum-prefix-length 2) ; デフォルトは4
+  (setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
+  (global-company-mode)
+  (global-set-key (kbd "C-M-i") 'company-complete)
+  ;; (setq company-idle-delay nil) ; 自動補完をしない
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  (define-key company-search-map (kbd "C-n") 'company-select-next)
+  (define-key company-search-map (kbd "C-p") 'company-select-previous)
+  (define-key company-active-map (kbd "<tab>") 'company-complete-selection))
+
+(eval-after-load "irony"
+  '(progn
+     (custom-set-variables '(irony-additional-clang-options '("-std=c++11")))
+     (add-to-list 'company-backends 'company-irony)
+     (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+     (add-hook 'c-mode-common-hook 'irony-mode)))
+
+(require 'flycheck) ; error for
+(when (require 'flycheck nil 'noerror)
+  (custom-set-variables
+   ;; エラーをポップアップで表示
+   '(flycheck-display-errors-function
+     (lambda (errors)
+       (let ((messages (mapcar #'flycheck-error-message errors)))
+         (popup-tip (mapconcat 'identity messages "\n")))))
+   '(flycheck-display-errors-delay 0.5))
+  (define-key flycheck-mode-map (kbd "C-M-n") 'flycheck-next-error)
+  (define-key flycheck-mode-map (kbd "C-M-p") 'flycheck-previous-error)
+  (add-hook 'c-mode-common-hook 'flycheck-mode))
+(eval-after-load "flycheck"
+  '(progn
+     (when (locate-library "flycheck-irony")
+       (flycheck-irony-setup))))
 
 (require 'highlight-symbol)
 (setq highlight-symbol-colors '("RoyalBlue1" "SpringGreen1" "DeepPink1" "OliveDrab"))
@@ -81,9 +106,6 @@
 
 (require 'auto-highlight-symbol)
 (global-auto-highlight-symbol-mode t)
-
-;;load-pathに~/.emacs.dを追加
-;(setq load-path (cons (concat (getenv "HOME") "/.emacs.d") load-path))
 
 ;;color-theme
 (require 'color-theme)
@@ -142,6 +164,17 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
+(require 'auto-complete-c-headers)
+(defun my:ac-c-headers-init ()
+  (require 'auto-complete-c-headers)
+  (add-to-list 'ac-sources 'ac-source-c-headers)
+  ; check list by '>> gcc -xc++ -E -v -'
+  (add-to-list 'achead:include-directories '"
+./
+/usr/include
+/usr/local/include
+/usr/include/c++
+"))
 (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
@@ -153,5 +186,46 @@
 	     (c-set-offset 'innamespace 0)   ; namespace {}の中はインデントしない
 	     (c-set-offset 'arglist-close 0) ; 関数の引数リストの閉じ括弧はインデントしない
 	     (gtags-mode 1)
+	     ; not sure below is working correctly
+	     (setq ac-clang-complete-executable "clang-complete")
+             (when (executable-find ac-clang-complete-executable)
+	       ; need to install by hand
+	       (require 'auto-complete-clang-async)
+	       (setq ac-sources '(ac-source-clang-async))
+	       (ac-clang-launch-completion-process))
 	     ))
+(add-hook 'c-mode-hook 'my:ac-c-headers-init)
 (add-hook 'c-mode-hook 'gtags-mode)
+
+(progn
+  (require 'whitespace)
+  (setq whitespace-style
+        '(
+          face ; faceで可視化
+          trailing ; 行末
+          tabs ; タブ
+          spaces ; スペース
+          space-mark ; 表示のマッピング
+          tab-mark
+          ))
+  (setq whitespace-display-mappings
+        '(
+          (space-mark ?\u3000 [?\u2423])
+          (tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t])
+          ))
+  (setq whitespace-trailing-regexp  "\\([ \u00A0]+\\)$")
+  (setq whitespace-space-regexp "\\(\u3000+\\)")
+  (set-face-attribute 'whitespace-trailing nil
+                      :foreground "RoyalBlue4"
+                      :background "RoyalBlue4"
+                      :underline nil)
+  (set-face-attribute 'whitespace-tab nil
+                      :foreground "yellow4"
+                      :background "yellow4"
+                      :underline nil)
+  (set-face-attribute 'whitespace-space nil
+                      :foreground "gray40"
+                      :background "gray20"
+                      :underline nil)
+  (global-whitespace-mode t)
+  )
