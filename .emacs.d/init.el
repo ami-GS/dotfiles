@@ -114,9 +114,6 @@
 (color-theme-billw)
 ;;
 (global-hl-line-mode t)
-(require 'col-highlight)
-(column-highlight-mode t)
-
 
 ;;対応する括弧に@で移動
 (global-set-key "@" 'match-paren)
