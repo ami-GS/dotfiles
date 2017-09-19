@@ -32,6 +32,40 @@
 ;;; 列数の表示
 (column-number-mode 1)
 
+(defvar my/bg-color "#111111")
+(progn
+  (require 'whitespace)
+  (setq whitespace-style
+        '(
+          face ; faceで可視化
+          trailing ; 行末
+          tabs ; タブ
+          spaces ; スペース
+          space-mark ; 表示のマッピング
+          tab-mark
+          ))
+  (setq whitespace-display-mappings
+        '(
+          (space-mark ?\u3000 [?\u2423])
+          (tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t])
+          ))
+  (setq whitespace-trailing-regexp  "\\([ \u00A0]+\\)$")
+  (setq whitespace-space-regexp "\\(\u3000+\\)")
+  (set-face-attribute 'whitespace-trailing nil
+		      :foreground "DeepPink"
+		      :background "DeepPink"
+		      :underline t)
+  (set-face-attribute 'whitespace-tab nil
+		      :background my/bg-color
+		      :foreground "LightSkyBlue"
+		      :underline t)
+  (set-face-attribute 'whitespace-space nil
+		      :foreground "gray40"
+		      :background "gray20"
+		      :underline nil)
+  (global-whitespace-mode t)
+  )
+
 ;;;カーソルの非選択画面での表示
 (setq cursor-in-non-selected-windows nil)
 
@@ -194,35 +228,3 @@
 (add-hook 'c-mode-hook 'my:ac-c-headers-init)
 (add-hook 'c-mode-hook 'gtags-mode)
 
-(progn
-  (require 'whitespace)
-  (setq whitespace-style
-        '(
-          face ; faceで可視化
-          trailing ; 行末
-          tabs ; タブ
-          spaces ; スペース
-          space-mark ; 表示のマッピング
-          tab-mark
-          ))
-  (setq whitespace-display-mappings
-        '(
-          (space-mark ?\u3000 [?\u2423])
-          (tab-mark ?\t [?\u00BB ?\t] [?\\ ?\t])
-          ))
-  (setq whitespace-trailing-regexp  "\\([ \u00A0]+\\)$")
-  (setq whitespace-space-regexp "\\(\u3000+\\)")
-  (set-face-attribute 'whitespace-trailing nil
-                      :foreground "RoyalBlue4"
-                      :background "RoyalBlue4"
-                      :underline nil)
-  (set-face-attribute 'whitespace-tab nil
-                      :foreground "yellow4"
-                      :background "yellow4"
-                      :underline nil)
-  (set-face-attribute 'whitespace-space nil
-                      :foreground "gray40"
-                      :background "gray20"
-                      :underline nil)
-  (global-whitespace-mode t)
-  )
