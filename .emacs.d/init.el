@@ -14,6 +14,7 @@
 
 ;;C-hでbackspace
 (keyboard-translate ?\C-h ?\C-?)
+(global-set-key (kbd "M-h") 'backward-kill-word)
 ;;警告音をフラッシュに
 (setq visible-bell t)
 (setq make-backup-files nil)
@@ -31,6 +32,10 @@
 
 ;;; 列数の表示
 (column-number-mode 1)
+
+(require 'tramp)
+(setq tramp-default-method "ssh")
+
 
 (defvar my/bg-color "#111111")
 (progn
@@ -79,22 +84,31 @@
 	 (local-set-key "\C-t" 'gtags-pop-stack)   ; back to prev buff
 	 ))
 
-(global-set-key (kbd "(") 'skeleton-pair-insert-maybe)
-(global-set-key (kbd "{") 'skeleton-pair-insert-maybe)
-(global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
-(global-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
-(global-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
-(setq skeleton-pair 1)
+(electric-pair-mode 1)
+(setq electric-pair-pairs '(
+			    (?\{ . ?\})
+			    (?\' . ?\')
+			    ))
 
-(defun electric-pair ()
-  "Insert character pair without sournding spaces"
-  (interactive)
-  (let (parens-require-spaces)
-    (insert-pair)))
+;;color-theme
+(load-theme 'misterioso t)
+
+;;
+(global-hl-line-mode t)
+
+;;対応する括弧に@で移動
+(global-set-key "@" 'match-paren)
+(defun match-paren (arg)
+  "Go to the matching paren if on a paren; otherwise insert %."
+  (interactive "p")
+  (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
+                ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+                (t (self-insert-command (or arg 1)))))
 
 ;;対応する括弧に色をつける
 (require 'paren)
 (show-paren-mode 1)
+(setq show-paren-style 'mixed)
 
 (when (locate-library "company")
   (setq company-idle-delay 0) ; デフォルトは0.5
@@ -140,24 +154,6 @@
 
 (require 'auto-highlight-symbol)
 (global-auto-highlight-symbol-mode t)
-
-;;color-theme
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-dark-laptop)
-(color-theme-billw)
-;;
-(global-hl-line-mode t)
-
-;;対応する括弧に@で移動
-(global-set-key "@" 'match-paren)
-(defun match-paren (arg)
-  "Go to the matching paren if on a paren; otherwise insert %."
-  (interactive "p")
-  (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
-                ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
-                (t (self-insert-command (or arg 1)))))
-
 
 ;;;滑らかスクロール
 (require 'smooth-scroll)
