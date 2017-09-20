@@ -123,12 +123,33 @@
   (define-key company-search-map (kbd "C-p") 'company-select-previous)
   (define-key company-active-map (kbd "<tab>") 'company-complete-selection))
 
+(require 'rtags)
+(require 'company-rtags)
+(setq rtags-completions-enabled t)
+(eval-after-load 'company
+  '(add-to-list
+    'company-backends 'company-rtags))
+(setq rtags-autostart-diagnostics t)
+(rtags-enable-standard-keybindings)
+(add-hook 'c-mode-hook 'rtags-start-process-unless-running)
+(add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
+(rtags-start-process-maybe)
+
+(add-hook 'c-mode-common-hook
+	  (lambda ()
+	    (local-set-key (kbd "M-.") 'rtags-find-symbol-at-point)
+	    (local-set-key (kbd "M-;") 'rtags-find-symbol)
+	    (local-set-key (kbd "M-@") 'rtags-find-references)
+	    (local-set-key (kbd "M-,") 'rtags-location-stack-back)))
+
+(require 'irony)
 (eval-after-load "irony"
   '(progn
      (custom-set-variables '(irony-additional-clang-options '("-std=c++11")))
      (add-to-list 'company-backends 'company-irony)
      (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-     (add-hook 'c-mode-common-hook 'irony-mode)))
+     (add-hook 'c-mode-common-hook 'irony-mode)
+     (add-hook 'c++-mode-common-hook 'irony-mode)))
 
 (require 'flycheck) ; error for
 (when (require 'flycheck nil 'noerror)
@@ -147,6 +168,24 @@
      (when (locate-library "flycheck-irony")
        (flycheck-irony-setup))))
 
+; if there is rtagsc
+;(require 'flycheck-rtags)
+;(defun my-flycheck-rtags-setup ()
+;  (flycheck-select-checker 'rtags)
+;  (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
+;  (setq-local flycheck-check-syntax-automatically nil))
+;; c-mode-common-hook is also called by c++-mode
+;(add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
+;(add-hook 'c++-mode-common-hook #'my-flycheck-rtags-setup)
+
+(require 'c-eldoc)
+(add-hook 'c-mode-hook
+          (lambda ()
+            (set (make-local-variable 'eldoc-idle-delay) 0.20)
+            (c-turn-on-eldoc-mode)
+            ))
+(setq c-eldoc-buffer-regenerate-time 60)
+
 (require 'highlight-symbol)
 (setq highlight-symbol-colors '("RoyalBlue1" "SpringGreen1" "DeepPink1" "OliveDrab"))
 (global-set-key (kbd "<f3>") 'highlight-symbol-at-point)
@@ -159,23 +198,41 @@
 (require 'smooth-scroll)
 (smooth-scroll-mode t)
 
+(add-to-list 'exec-path (expand-file-name "$HOME/Go/bin/"))
+(require 'go-eldoc)
 (require 'go-mode)
-(require 'go-autocomplete)
-(add-hook 'go-mode-hook
-	  '(lambda()
-	     (setq c-basic-offset 4)
-	     (setq indent-tabs-mode t)
-	     (local-set-key (kbd "M-.") 'godef-jump)
-	     (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
-	     (local-set-key (kbd "C-c i") 'go-goto-imports)
-	     (local-set-key (kbd "C-c d") 'godoc)
-	     (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
-	     (gtags-mode 1)
-	     ))
-(add-hook 'before-save-hook 'gofmt-before-save)
+(require 'company-go)
+(add-hook 'go-mode-hook 'company-mode)
+(add-hook 'go-mode-hook 'flycheck-mode)
+(add-hook 'go-mode-hook (lambda()
+           (setq gofmt-command "goimports")
+           (add-hook 'before-save-hook 'gofmt-before-save)
+           (local-set-key (kbd "M-.") 'godef-jump)
+           (set (make-local-variable 'company-backends) '(company-go))
+           (company-mode)
+           (setq indent-tabs-mode nil)    ; タブを利用
+           (setq c-basic-offset 4)        ; tabサイズを4にする
+           (setq tab-width 4)))
 (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
+(add-hook 'go-mode-hook 'go-eldoc-setup)
+(set-face-attribute 'eldoc-highlight-function-argument nil
+                    :underline t :foreground "green"
+                    :weight 'bold)
 
+
+;(flymake-mode t)
 (require 'python)
+(require 'python-mode)
+(require 'py-autopep8)
+(require 'flymake-python-pyflakes)
+(flymake-python-pyflakes-load)
+(setq py-autopep8-options '("--max-line-length=200"))
+(setq flycheck-flake8-maximum-line-length 200)
+(py-autopep8-enable-on-save)
+;(define-key python-mode-map (kbd "C-c F") 'py-autopep8)          ; バッファ全体のコード整形
+;(define-key python-mode-map (kbd "C-c f") 'py-autopep8-region)   ; 選択リジョン内のコード整形
+;; 保存時にバッファ全体を自動整形する
+(add-hook 'before-save-hook 'py-autopep8-before-save)
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 (autoload 'python-mode "python-mode" "Python editing mode." t)
@@ -187,6 +244,12 @@
 	     (setq tab-width 4)
 	     (gtags-mode 1)
 	     ))
+(setenv "PYTHONPATH" "/usr/local/lib/python2.7/site-packages")
+(require 'jedi-core)
+(setq jedi:complete-on-dot t)
+(setq jedi:use-shortcuts t)
+(add-hook 'python-mode-hook 'jedi:setup)
+(add-to-list 'company-backends 'company-jedi) ; backendに追加
 
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
@@ -224,3 +287,6 @@
 (add-hook 'c-mode-hook 'my:ac-c-headers-init)
 (add-hook 'c-mode-hook 'gtags-mode)
 
+(require 'helm)
+(helm-mode t)
+(global-set-key (kbd "M-x") 'helm-M-x)
