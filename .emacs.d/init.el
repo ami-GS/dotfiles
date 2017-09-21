@@ -112,7 +112,7 @@
 
 (when (locate-library "company")
   (setq company-idle-delay 0) ; デフォルトは0.5
-  (setq company-minimum-prefix-length 2) ; デフォルトは4
+  (setq company-minimum-prefix-length 1) ; デフォルトは4
   (setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
   (global-company-mode)
   (global-set-key (kbd "C-M-i") 'company-complete)
@@ -122,6 +122,7 @@
   (define-key company-search-map (kbd "C-n") 'company-select-next)
   (define-key company-search-map (kbd "C-p") 'company-select-previous)
   (define-key company-active-map (kbd "<tab>") 'company-complete-selection))
+(setq completion-show-help nil)
 
 (require 'rtags)
 (require 'company-rtags)
@@ -254,7 +255,6 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
-(require 'auto-complete-c-headers)
 (defun my:ac-c-headers-init ()
   (require 'auto-complete-c-headers)
   (add-to-list 'ac-sources 'ac-source-c-headers)
@@ -265,27 +265,28 @@
 /usr/local/include
 /usr/include/c++
 "))
+
 (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
 (add-hook 'c++-mode-hook
-	  '(lambda()
-	     (c-set-style "stroustrup")
-	     (setq indent-tabs-mode nil)     ; インデントは空白文字で行う（TABコードを空白に変換）
-	     (c-set-offset 'innamespace 0)   ; namespace {}の中はインデントしない
-	     (c-set-offset 'arglist-close 0) ; 関数の引数リストの閉じ括弧はインデントしない
-	     (gtags-mode 1)
-	     ; not sure below is working correctly
-	     (setq ac-clang-complete-executable "clang-complete")
-             (when (executable-find ac-clang-complete-executable)
-	       ; need to install by hand
-	       (require 'auto-complete-clang-async)
-	       (setq ac-sources '(ac-source-clang-async))
-	       (ac-clang-launch-completion-process))
-	     ))
+	  (lambda()
+	    (c-set-style "stroustrup")
+	    (setq indent-tabs-mode nil)     ; インデントは空白文字で行う（TABコードを空白に変換）
+	    (c-set-offset 'innamespace 0)   ; namespace {}の中はインデントしない
+	    (c-set-offset 'arglist-close 0) ; 関数の引数リストの閉じ括弧はインデントしない
+					; not sure below is working correctly
+	    (set (make-local-variable 'eldoc-idle-delay) 0.20)
+	    (c-turn-on-eldoc-mode)
+	    (setq ac-clang-complete-executable "clang-complete")
+	    (when (executable-find ac-clang-complete-executable)
+					; need to install by hand
+	      (require 'auto-complete-clang-async)
+	      (setq ac-sources '(ac-source-clang-async))
+	      (ac-clang-launch-completion-process))
+	    ))
 (add-hook 'c-mode-hook 'my:ac-c-headers-init)
-(add-hook 'c-mode-hook 'gtags-mode)
 
 (require 'helm)
 (helm-mode t)
