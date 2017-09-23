@@ -61,12 +61,11 @@
 		      :background "DeepPink"
 		      :underline t)
   (set-face-attribute 'whitespace-tab nil
-		      :background my/bg-color
-		      :foreground "LightSkyBlue"
+;		      :background my/bg-color
+		      :foreground "Deeppink"
 		      :underline t)
   (set-face-attribute 'whitespace-space nil
 		      :foreground "gray40"
-		      :background "gray20"
 		      :underline nil)
   (global-whitespace-mode t)
   )
@@ -137,7 +136,7 @@
 (rtags-start-process-maybe)
 
 (add-hook 'c-mode-common-hook
-	  (lambda ()
+	  '(lambda ()
 	    (local-set-key (kbd "M-.") 'rtags-find-symbol-at-point)
 	    (local-set-key (kbd "M-;") 'rtags-find-symbol)
 	    (local-set-key (kbd "M-@") 'rtags-find-references)
@@ -181,7 +180,7 @@
 
 (require 'c-eldoc)
 (add-hook 'c-mode-hook
-          (lambda ()
+          '(lambda ()
             (set (make-local-variable 'eldoc-idle-delay) 0.20)
             (c-turn-on-eldoc-mode)
             ))
@@ -271,7 +270,7 @@
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
 (add-hook 'c++-mode-hook
-	  (lambda()
+	  '(lambda()
 	    (c-set-style "stroustrup")
 	    (setq indent-tabs-mode nil)     ; インデントは空白文字で行う（TABコードを空白に変換）
 	    (c-set-offset 'innamespace 0)   ; namespace {}の中はインデントしない
