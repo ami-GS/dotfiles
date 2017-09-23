@@ -122,8 +122,24 @@
   (define-key company-search-map (kbd "C-p") 'company-select-previous)
   (define-key company-active-map (kbd "<tab>") 'company-complete-selection))
 (setq completion-show-help nil)
+(setq company-dabbrev-downcase 0)
+(defun tab-indent-or-complete ()
+  (interactive)
+  (if (minibufferp)
+      (minibuffer-complete)
+    (if (or (not yas-minor-mode)
+            (null (do-yas-expand)))
+        (if (check-expansion)
+            (company-complete-common)
+          (indent-for-tab-command)))))
+(global-set-key [backtab] 'tab-indent-or-complete)
 
 (require 'rtags)
+;(setq rtags-rdm-includes "/usr/local/include")
+;(setq rtags-rdm-includes "./")
+;(setq rtags-rdm-includes "/usr/include")
+
+
 (require 'company-rtags)
 (setq rtags-completions-enabled t)
 (eval-after-load 'company
@@ -169,14 +185,14 @@
        (flycheck-irony-setup))))
 
 ; if there is rtagsc
-;(require 'flycheck-rtags)
-;(defun my-flycheck-rtags-setup ()
-;  (flycheck-select-checker 'rtags)
-;  (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
-;  (setq-local flycheck-check-syntax-automatically nil))
-;; c-mode-common-hook is also called by c++-mode
-;(add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
-;(add-hook 'c++-mode-common-hook #'my-flycheck-rtags-setup)
+(require 'flycheck-rtags)
+(defun my-flycheck-rtags-setup ()
+  (flycheck-select-checker 'rtags)
+  (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
+  (setq-local flycheck-check-syntax-automatically nil))
+; c-mode-common-hook is also called by c++-mode
+(add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
+(add-hook 'c++-mode-common-hook #'my-flycheck-rtags-setup)
 
 (require 'c-eldoc)
 (add-hook 'c-mode-hook
