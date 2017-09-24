@@ -220,15 +220,14 @@
 (require 'company-go)
 (add-hook 'go-mode-hook 'company-mode)
 (add-hook 'go-mode-hook 'flycheck-mode)
-(add-hook 'go-mode-hook (lambda()
+(add-hook 'go-mode-hook '(lambda()
            (setq gofmt-command "goimports")
            (add-hook 'before-save-hook 'gofmt-before-save)
            (local-set-key (kbd "M-.") 'godef-jump)
            (set (make-local-variable 'company-backends) '(company-go))
            (company-mode)
-           (setq indent-tabs-mode nil)    ; タブを利用
            (setq c-basic-offset 4)        ; tabサイズを4にする
-           (setq tab-width 4)))
+	   (setq indent-tabs-mode t)))
 (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 (add-hook 'go-mode-hook 'go-eldoc-setup)
 (set-face-attribute 'eldoc-highlight-function-argument nil
@@ -291,16 +290,15 @@
 	    (setq indent-tabs-mode nil)     ; インデントは空白文字で行う（TABコードを空白に変換）
 	    (c-set-offset 'innamespace 0)   ; namespace {}の中はインデントしない
 	    (c-set-offset 'arglist-close 0) ; 関数の引数リストの閉じ括弧はインデントしない
-					; not sure below is working correctly
-	    (set (make-local-variable 'eldoc-idle-delay) 0.20)
+		;not sure below is working correctly
+	    (set (make-local-variable 'eldoc-idle-delay) 0.10)
 	    (c-turn-on-eldoc-mode)
 	    (setq ac-clang-complete-executable "clang-complete")
 	    (when (executable-find ac-clang-complete-executable)
-					; need to install by hand
+		; need to install by hand
 	      (require 'auto-complete-clang-async)
 	      (setq ac-sources '(ac-source-clang-async))
-	      (ac-clang-launch-completion-process))
-	    ))
+	      (ac-clang-launch-completion-process))))
 (add-hook 'c-mode-hook 'my:ac-c-headers-init)
 
 (require 'helm)
