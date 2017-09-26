@@ -90,7 +90,7 @@
 			    ))
 
 ;;color-theme
-(load-theme 'misterioso t)
+(load-theme 'tsdh-dark t)
 
 ;;
 (global-hl-line-mode t)
