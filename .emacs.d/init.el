@@ -301,6 +301,9 @@
 	      (ac-clang-launch-completion-process))))
 (add-hook 'c-mode-hook 'my:ac-c-headers-init)
 
+;(require 'dockerfile-mode)
+;(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+
 (require 'helm)
 (helm-mode t)
 (global-set-key (kbd "M-x") 'helm-M-x)
