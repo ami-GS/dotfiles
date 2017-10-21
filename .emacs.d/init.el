@@ -72,6 +72,9 @@
 
 ;;;カーソルの非選択画面での表示
 (setq cursor-in-non-selected-windows nil)
+(add-to-list 'load-path "~/.emacs.d/custom")
+;automatically install packages
+(load "00_install.el")
 
 (add-to-list 'load-path "/usr/local/share/gtags")
 (autoload 'gtags-mode "gtags" "" t)
