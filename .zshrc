@@ -92,3 +92,15 @@ function peco-src() {
     zle -R -c
 }
 zle -N peco-src
+
+case `uname` in
+  Darwin)
+      export DYLD_LIBRARY_PATH=$HOME/llvm/build/lib:$DYLD_LIBRARY_PATH
+      alias clang-omp='/usr/local/opt/llvm/bin/clang -fopenmp -L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib'
+      alias clang-omp++='/usr/local/opt/llvm/bin/clang++ -fopenmp -L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib'
+      HOMEBREW_GITHUB_API_TOKEN=""
+  ;;
+  Linux)
+    # commands for Linux
+  ;;
+esac
