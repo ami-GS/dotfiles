@@ -1,6 +1,8 @@
 ; package auto install
-(defvar my-favorite-package-list
-  '(rtags
+(require 'cl)
+(defvar installing-package-list
+  '(
+    rtags
     company-rtags
     irony
     flycheck
@@ -18,14 +20,18 @@
     flymake-python-pyflakes
     jedi-core
     yaml-mode
+    golden-ratio
     ; issue? manually
-    ;auto-complete-c-header
-    ;company-mode
+    ac-c-headers
+    company
     dockerfile-mode
     helm
-    markdown-mode)
-  "packages to be installed")
-(unless package-archive-contents (package-refresh-contents))
-(dolist (pkg my-favorite-package-list)
-  (unless (package-installed-p pkg)
-    (package-install pkg)))
+    markdown-mode
+    ))
+(let ((not-installed (loop for x in installing-package-list
+			   when (not (package-installed-p x))
+			   collect x)))
+  (when not-installed
+    (package-refresh-contents)
+    (dolist (pkg not-installed)
+      (package-install pkg))))

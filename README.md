@@ -11,3 +11,11 @@ bash ./setDotfiles.sh
 # if you need proxy in your environment
 bash ./setDotfiles.sh -p 'address:port'
 ```
+
+
+##### emacs
+when you see "Package '???-' is unavailable" error in emacs, try run bellow
+
+```
+M-x package-refresh-contents
+```
