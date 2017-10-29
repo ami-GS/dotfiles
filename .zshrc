@@ -29,7 +29,11 @@ HISTSIZE=1000
 SACEHIST=1000
 
 #prompt
-source $HOME/dotfiles/git-prompt.sh
+if [ ! -e $HOME/dotfiles/git-prompt.sh ]; then
+    echo "Please Download git-prompt.sh "
+else
+    source $HOME/dotfiles/git-prompt.sh
+fi
 
 GIT_PS1_SHOWDIRTYSTATE=true
 PS1='%F{6}$(__git_ps1) %f%F{3}>> %f'
@@ -63,6 +67,8 @@ export locale=en_US.UTF-8
 
 #Go
 export PATH=$PATH:/usr/local/go/bin
+if [ ! -e $HOME/Go ]; then
+    mkdir $HOME/Go
 export GOPATH=$HOME/Go
 export PATH=$PATH:$GOPATH/bin
 
