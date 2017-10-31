@@ -13,7 +13,7 @@ fi
 if [  "$(uname)" == 'Darwin' ]; then
     if type git > /dev/null 2>&1; then
 	# is brew installed as default?
-	sudo brew install git tig
+	sudo brew install git tig go
     fi
     OS='Mac'
 elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
@@ -47,6 +47,31 @@ else
   echo "Your platform ($(uname -a)) is not supported."
   exit 1
 fi
+
+if [ ! -e $HOME/Go ]; then
+    mkdir $HOME/Go/
+    export GOPATH=$HOME/Go/
+    go get ghq
+fi
+
+ghq get https://github.com/Andersbakken/rtags.git
+cd $HOME/Go/src/github.com/Andersbakken/rtags
+git submodule init
+git submodule update
+mkdir build && cd build
+cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && make -j4
+./bin/rdm &
+cd $HOME
+
+ghq get https://github.com/rizsotto/Bear
+cd $HOME/Go/src/github.com/rizsotto/Bear
+mkdir build && cd build
+cmake .. && make -j 4 && sudo make install -j4
+
+ghq get https://github.com/rogpeppe/godef
+ghq get -u https://github.com/nsf/gocode
+ghq get https://github.com/golang/lint/golint
+ghq get https://github.com/kisielk/errcheck
 
 # google test settings
 if [ ! -e $HOME/googletest ]; then
