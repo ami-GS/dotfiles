@@ -22,11 +22,13 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	 [  -e /etc/SuSE-release   ]; then
         # Check Ubuntu, Debian or SuSE
 	# for golang
+	sudo apt-get update && sudo apt-get install -y apt-file && sudo apt-file update
+	sudo apt-get install -y software-properties-common
 	sudo add-apt-repository -y ppa:ubuntu-lxc/lxd-stable
 	sudo apt-get update -y
-	sudo apt-get upgrade -y
-	sudo apt-get install -y cmake zsh golang git tig automake \
-	     exuberant-ctags python-pygments python3-pygments ncurses-dev
+	sudo apt-get install -y cmake zsh golang git tig automake libevent-dev \
+	     exuberant-ctags python-pygments python3-pygments ncurses-dev \
+	     llvm libclang-dev wget
 	if [  -e /etc/SuSE-release ]; then
 	    sudo apt-get install -y go
 	else
