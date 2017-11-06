@@ -36,11 +36,12 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	fi
     elif [  -e /etc/redhat-release ]; then
 	# rhel, centos
-	sudo yum install epel-release -y
+	sudo yum install -y centos-release-scl epel-release
+	sudo yum-config-manager --enable rhel-server-rhscl-7-rpms -y # for rhel
 	sudo yum update -y
-	sudo yum upgrade -y
 	sudo yum install -y zsh cmake git tig ctags-etags libevent gcc gcc-c++ \
-	     python-pygments ncurses-devel ncurses wget automake libevent-devel
+	     python-pygments ncurses-devel ncurses wget automake libevent-devel \
+	     devtoolset-7 llvm llvm-devel clang clang-devel go
     fi
     OS='Linux'
 elif [  "$(expr substr $(uname -s) 1 10)" == 'MINGW32_NT' ]; then
