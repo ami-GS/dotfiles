@@ -35,8 +35,12 @@ else
     source $HOME/dotfiles/git-prompt.sh
 fi
 
+PROMPT_OPT=""
+if [ "$INDOCKER" = y ]; then
+    PROMPT_OPT="%F{5}docker%f"
+fi
 GIT_PS1_SHOWDIRTYSTATE=true
-PS1='%F{6}$(__git_ps1) %f%F{3}>> %f'
+PS1=$PROMPT_OPT'%F{6}$(__git_ps1) %f%F{3}>> %f'
 PROMPT=$PS1
 RPROMPT='%F{white}%35<..<%~/%f'
 
