@@ -49,6 +49,7 @@ export LS_COLOR='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:
 export CLICOLOR=tru
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
+alias ls='ls --color==auto'
 #conduct 'ls' after 'cd'
 function cd(){
     builtin cd $@ && ls;
