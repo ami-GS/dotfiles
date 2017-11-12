@@ -52,8 +52,8 @@ export GOPATH=$HOME/Go/
 export PATH=$PATH:$GOPATH/bin
 if [ ! -e $HOME/Go ]; then
     mkdir $HOME/Go/
-    export GOPATH=$HOME/Go/
-    go get ghq
+    go get github.com/motemen/ghq
+    git config --global ghq.root $HOME/Go/src
 fi
 
 ghq get https://github.com/Andersbakken/rtags.git
