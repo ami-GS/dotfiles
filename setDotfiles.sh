@@ -48,6 +48,8 @@ else
   exit 1
 fi
 
+export GOPATH=$HOME/Go/
+export PATH=$PATH:$GOPATH/bin
 if [ ! -e $HOME/Go ]; then
     mkdir $HOME/Go/
     export GOPATH=$HOME/Go/
