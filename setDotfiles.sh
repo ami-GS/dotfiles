@@ -56,19 +56,23 @@ if [ ! -e $HOME/Go ]; then
     git config --global ghq.root $HOME/Go/src
 fi
 
-ghq get https://github.com/Andersbakken/rtags.git
-cd $HOME/Go/src/github.com/Andersbakken/rtags
-git submodule init
-git submodule update
-mkdir build && cd build
-cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && make -j4
-./bin/rdm &
-cd $HOME
+if [ ! -e $GOPATH/src/github.com/Andersbakken/rtags ];then
+    ghq get https://github.com/Andersbakken/rtags.git
+    cd $HOME/Go/src/github.com/Andersbakken/rtags
+    git submodule init
+    git submodule update
+    mkdir build && cd build
+    cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && make -j4
+    ./bin/rdm --daemon
+    cd $HOME
+fi
 
-ghq get https://github.com/rizsotto/Bear
-cd $HOME/Go/src/github.com/rizsotto/Bear
-mkdir build && cd build
-cmake .. && make -j 4 && sudo make install -j4
+if [ ! -e $GOPATH/src/github.com/rizsotto/Bear ]; then
+    ghq get https://github.com/rizsotto/Bear
+    cd $HOME/Go/src/github.com/rizsotto/Bear
+    mkdir build && cd build
+    cmake .. && make -j 4 && sudo make install -j4
+fi
 
 ghq get https://github.com/rogpeppe/godef
 ghq get -u https://github.com/nsf/gocode
@@ -85,12 +89,12 @@ if [ ! -e $HOME/googletest ]; then
 fi
 
 
-if [ ! -e tmux ];then
-    git clone https://github.com/tmux/tmux
-    cd tmux
+if [ ! -e $GOPATH/src/github.com/tmux/tmux ];then
+    ghq get https://github.com/tmux/tmux
+    cd $GOPATH/src/github.com/tmux/tmux
     sh autogen.sh && ./configure && make
     cd $HOME/dotfiles
-    sudo ln -s $HOME/dotfiles/tmux/tmux /usr/bin/tmux
+    sudo ln -s $GOPATH/src/github.com/tmux/tmux/tmux /usr/bin/tmux
     cp .tmux.conf $HOME/
 fi
 
