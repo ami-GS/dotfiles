@@ -5,6 +5,7 @@
     rtags
     company-rtags
     irony
+    git-gutter
     flycheck
     flycheck-rtags
     c-eldoc
