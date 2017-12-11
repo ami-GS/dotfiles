@@ -74,6 +74,7 @@ export locale=en_US.UTF-8
 export PATH=$PATH:/usr/local/go/bin
 if [ ! -e $HOME/Go ]; then
     mkdir $HOME/Go
+fi
 export GOPATH=$HOME/Go
 export PATH=$PATH:$GOPATH/bin
 
