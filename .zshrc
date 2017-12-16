@@ -1,6 +1,20 @@
 #auto complete
 autoload -Uz compinit
 compinit
+zstyle ':completion:*:default' menu select=2
+
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
+zstyle ':completion:*:messages' format '%F{YELLOW}%d'$DEFAULT
+zstyle ':completion:*:warnings' format '%F{RED}No matches for:''%F{YELLOW} %d'$DEFAULT
+zstyle ':completion:*:descriptions' format '%F{YELLOW}completing %B%d%b'$DEFAULT
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:descriptions' format '%F{yellow}Completing %B%d%b%f'$DEFAULT
+
+zstyle ':completion:*' group-name ''
+
+zstyle ':completion:*' list-separator '-->'
+zstyle ':completion:*:manuals' separate-sections true
 
 #spell check
 setopt correct
@@ -45,24 +59,13 @@ PROMPT=$PS1
 RPROMPT='%F{white}%35<..<%~/%f'
 
 #color
-export LS_COLOR='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
 export CLICOLOR=tru
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-
-alias ls='ls -G'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 #conduct 'ls' after 'cd'
 function cd(){
     builtin cd $@ && ls;
 }
-export LSCOLORS=gxfxcxdxbxegedabagacad # ls color for black background
-
-#macports
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
-
-#from bash path
-export PATH=/sw/bin:/sw/sbin:./:/usr/local/sbin/:$PATH
-export MANPATH=/sw/share/man/ja:/sw/share/man:/usr/share/man:/usr/local/share/man:/opt/X11/share/man:/usr/textbin/man:/Library/Developer/CommandLineTools/usr/share/man:/sw/lib/perl15/5.16.2/man:$MANPATH
 
 #git
 export EDITOR='emacs -nw'
@@ -89,10 +92,6 @@ alias active2="source /Users/daiki/pyENV2/bin/activate"
 alias active3="source /Users/daiki/pyENV3/bin/activate"
 #C++ test
 alias cpptest="c++ -I $HOME/googletest/googletest/include $HOME/googletest/googletest/build/libgtest.a $HOME/googletest/googletest/build/libgtest_main.a"
-alias ls='ls --color=auto'
-
-#SNAP
-export SNAP_PATH=$HOME/Go/src/github.com/intelsdi-x/snap/build
 
 bindkey '^]' peco-src
 function peco-src() {
@@ -110,9 +109,11 @@ case `uname` in
       export DYLD_LIBRARY_PATH=$HOME/llvm/build/lib:$DYLD_LIBRARY_PATH
       alias clang-omp='/usr/local/opt/llvm/bin/clang -fopenmp -L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib'
       alias clang-omp++='/usr/local/opt/llvm/bin/clang++ -fopenmp -L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib'
+      alias ls='ls -G'
       HOMEBREW_GITHUB_API_TOKEN=""
   ;;
   Linux)
-    # commands for Linux
+  # commands for Linux
+      alias ls='ls --color=auto'
   ;;
 esac
