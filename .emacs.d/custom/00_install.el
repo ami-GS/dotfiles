@@ -1,9 +1,11 @@
 ; package auto install
-(require 'cl)
-(defvar installing-package-list
-  '(
-    rtags
+(defvar my-favorite-package-list
+  '(rtags
+    company
+    company-go
+    company-irony
     company-rtags
+    company-c-headers
     irony
     git-gutter
     flycheck
@@ -14,25 +16,19 @@
     smooth-scroll
     go-eldoc
     go-mode
-    company-go
     python
     python-mode
     py-autopep8
     flymake-python-pyflakes
     jedi-core
     yaml-mode
-    golden-ratio
     ; issue? manually
-    ac-c-headers
-    company
+    ;auto-complete-c-header
     dockerfile-mode
     helm
-    markdown-mode
-    ))
-(let ((not-installed (loop for x in installing-package-list
-			   when (not (package-installed-p x))
-			   collect x)))
-  (when not-installed
-    (package-refresh-contents)
-    (dolist (pkg not-installed)
-      (package-install pkg))))
+    markdown-mode)
+  "packages to be installed")
+(unless package-archive-contents (package-refresh-contents))
+(dolist (pkg my-favorite-package-list)
+  (unless (package-installed-p pkg)
+    (package-install pkg)))

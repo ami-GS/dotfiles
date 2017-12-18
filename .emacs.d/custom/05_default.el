@@ -9,7 +9,7 @@
 (set-face-background 'mode-line "blue4")
 
 ;;C-hでbackspace
-(keyboard-translate ?\C-h ?\C-?)
+(define-key key-translation-map [?\C-h] [?\C-?])
 (global-set-key (kbd "M-h") 'backward-kill-word)
 ;;警告音をフラッシュに
 (setq visible-bell t)
@@ -58,7 +58,7 @@
 		      :underline t)
   (set-face-attribute 'whitespace-tab nil
 ;		      :background my/bg-color
-		      :foreground "Deeppink"
+		      :foreground "gray40"
 		      :underline t)
   (set-face-attribute 'whitespace-space nil
 		      :foreground "gray40"
