@@ -86,8 +86,6 @@ export GTAGSCONF=/usr/local/share/gtags/gtags.conf
 export GTAGSLABEL=pygments
 
 #alias
-alias emacs="emacs -nw"
-alias e='emacsclient -nw -a ""' # emacs with daemon
 alias emacs='emacsclient -nw -a ""'
 alias ekill='emacsclient -e "(kill-emacs)"'
 alias python="python2.7" #"python" has rich package but "python2.7" is version 2.7.10
