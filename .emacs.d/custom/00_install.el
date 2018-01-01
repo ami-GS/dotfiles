@@ -24,6 +24,7 @@
     yaml-mode
     ; issue? manually
     ;auto-complete-c-header
+    golden-ratio
     dockerfile-mode
     helm
     markdown-mode)
