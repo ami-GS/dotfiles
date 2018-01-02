@@ -33,3 +33,12 @@
 (dolist (pkg my-favorite-package-list)
   (unless (package-installed-p pkg)
     (package-install pkg)))
+
+(defun download_another_packages ()
+  (interactive)
+  (shell-command-to-string "git clone https://github.com/syohex/emacs-cpp-auto-include $HOME/.emacs.d/custom/emacs-cpp-auto-include && cp $HOME/.emacs.d/custom/emacs-cpp-auto-include/cpp-auto-include.el  $HOME/.emacs.d/custom/cpp-auto-include.el"))
+
+(if (file-exists-p "$HOME/.emacs.d/custom/cpp-auto-include.el")
+    nil
+    (download_another_packages)
+)

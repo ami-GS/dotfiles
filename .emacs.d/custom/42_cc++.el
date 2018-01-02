@@ -8,6 +8,16 @@
 	    (local-set-key (kbd "M-@") 'rtags-find-references)
 	    (local-set-key (kbd "M-,") 'rtags-location-stack-back)))
 
+;autoinclude for c++
+(load "./cpp-auto-include.el")
+(add-hook 'c++-mode-hook
+  (lambda()
+    (add-hook 'write-contents-functions
+      (lambda()
+        (save-excursion
+          (cpp-auto-include)))
+      nil t)))
+
 ;depends on flycheck
 (add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
 (add-hook 'c++-mode-common-hook #'my-flycheck-rtags-setup)
