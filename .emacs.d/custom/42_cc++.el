@@ -73,7 +73,7 @@
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
 (add-hook 'c++-mode-hook
-	  '(lambda()
+	  '(lambda() ()
 	    (c-set-style "stroustrup")
 	    (setq indent-tabs-mode nil)     ; インデントは空白文字で行う（TABコードを空白に変換）
 	    (c-set-offset 'innamespace 0)   ; namespace {}の中はインデントしない
