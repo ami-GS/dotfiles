@@ -1,6 +1,24 @@
+(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
+(defun my:ac-c-headers-init ()
+  (require 'auto-complete-c-headers)
+  (add-to-list 'ac-sources 'ac-source-c-headers)
+  ; check list by '>> gcc -xc++ -E -v -'
+  (add-to-list 'achead:include-directories '"
+./
+./include
+../include
+../../include
+/usr/include
+/usr/local/include
+/usr/include/c++
+"))
+(add-hook 'c-mode-common-hook 'my:ac-c-headers-init)
+
 ; depends on rtags
-(add-hook 'c-mode-hook 'rtags-start-process-unless-running)
-(add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
+(add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
 (add-hook 'c-mode-common-hook
 	  '(lambda ()
 	    (local-set-key (kbd "M-.") 'rtags-find-symbol-at-point)
@@ -20,7 +38,6 @@
 
 ;depends on flycheck
 (add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
-(add-hook 'c++-mode-common-hook #'my-flycheck-rtags-setup)
 
 (require 'c-eldoc)
 (add-hook 'c-mode-hook
@@ -34,11 +51,11 @@
 (require 'irony)
 (eval-after-load "irony"
   '(progn
-     (custom-set-variables '(irony-additional-clang-options '("-std=c++11")))
+     (custom-set-variables '(irony-additional-clang-options '("-std=c++1z")))
      (add-to-list 'company-backends 'company-irony)
      (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-     (add-hook 'c-mode-common-hook 'irony-mode)
-     (add-hook 'c++-mode-common-hook 'irony-mode)))
+     (add-hook 'c-mode-common-hook 'irony-mode))
+  )
 
 (require 'flycheck) ; error for
 (when (require 'flycheck nil 'noerror)
@@ -57,22 +74,7 @@
      (when (locate-library "flycheck-irony")
        (flycheck-irony-setup))))
 
-(defun my:ac-c-headers-init ()
-  (require 'auto-complete-c-headers)
-  (add-to-list 'ac-sources 'ac-source-c-headers)
-  ; check list by '>> gcc -xc++ -E -v -'
-  (add-to-list 'achead:include-directories '"
-./
-/usr/include
-/usr/local/include
-/usr/include/c++
-"))
-
-(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
-(add-hook 'c++-mode-hook
+(add-hook 'c-mode-common-hook
 	  '(lambda() ()
 	    (c-set-style "stroustrup")
 	    (setq indent-tabs-mode nil)     ; インデントは空白文字で行う（TABコードを空白に変換）
@@ -84,7 +86,6 @@
 	    (setq ac-clang-complete-executable "clang-complete")
 	    (when (executable-find ac-clang-complete-executable)
 		; need to install by hand
-	      (require 'auto-complete-clang-async)
-	      (setq ac-sources '(ac-source-clang-async))
-	      (ac-clang-launch-completion-process))))
-(add-hook 'c-mode-hook 'my:ac-c-headers-init)
+	    (require 'auto-complete-clang-async)
+	    (setq ac-sources '(ac-source-clang-async))
+	    (ac-clang-launch-completion-process))))
