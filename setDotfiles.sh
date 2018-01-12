@@ -28,7 +28,7 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	sudo apt-get update -y
 	sudo apt-get install -y cmake zsh golang git tig automake libevent-dev \
 	     exuberant-ctags python-pygments python3-pygments ncurses-dev \
-	     llvm libclang-dev wget
+	     llvm libclang-dev wget cgdb htop
 	if [  -e /etc/SuSE-release ]; then
 	    sudo apt-get install -y go
 	else
@@ -50,6 +50,9 @@ else
   echo "Your platform ($(uname -a)) is not supported."
   exit 1
 fi
+
+git config --global user.name ami-GS
+git config --global user.email 1991.daiki@gmail.com
 
 export GOPATH=$HOME/Go/
 export PATH=$PATH:$GOPATH/bin
