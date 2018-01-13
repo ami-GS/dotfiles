@@ -80,10 +80,10 @@ if [ ! -e $GOPATH/src/github.com/rizsotto/Bear ]; then
     cmake .. && make -j 4 && sudo make install -j4
 fi
 
-go get https://github.com/rogpeppe/godef
-go get -u https://github.com/nsf/gocode
-go get https://github.com/golang/lint/golint
-go get https://github.com/kisielk/errcheck
+go get github.com/rogpeppe/godef
+go get -u github.com/nsf/gocode
+go get github.com/golang/lint/golint
+go get github.com/kisielk/errcheck
 go get github.com/peco/peco/cmd/peco
 
 # google test settings
