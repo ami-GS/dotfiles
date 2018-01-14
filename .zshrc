@@ -42,11 +42,14 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000
 SACEHIST=1000
 
+if [ ! -e $HOME/.myconfig ]; then
+    mkdir $HOME/.myconfig
+fi
 #prompt
-if [ ! -e $HOME/dotfiles/git-prompt.sh ]; then
+if [ ! -e $HOME/.myconfig/git-prompt.sh ]; then
     echo "Please Download git-prompt.sh "
 else
-    source $HOME/dotfiles/git-prompt.sh
+    source $HOME/.myconfig/git-prompt.sh
 fi
 
 PROMPT_OPT=""

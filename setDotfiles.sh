@@ -115,8 +115,12 @@ fi
 
 cp .emacs $HOME/
 cp -r .emacs.d $HOME/
+if [ ! -e $HOME/.myconfig ]; then
+    mkdir $HOME/.myconfig
+fi
+
 if [ ! -e git-prompt.sh ]; then
-    wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+    wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -P ../.myconfig/
 fi
 sudo chsh -s /bin/zsh $USER
 cp .zshrc $HOME/
