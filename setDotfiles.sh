@@ -113,8 +113,6 @@ if [ ! -e global* ]; then
    cd $HOME/dotfiles
 fi
 
-cp .emacs $HOME/
-cp -r .emacs.d $HOME/
 if [ ! -e $HOME/.myconfig ]; then
     mkdir $HOME/.myconfig
 fi
@@ -124,7 +122,9 @@ if [ ! -e git-prompt.sh ]; then
 fi
 sudo chsh -s /bin/zsh $USER
 cp .zshrc $HOME/
-
+cp .emacs $HOME/
+cp -r .emacs.d $HOME/
+cp -r .docker $HOME/
 
 if [ "$*" == "--xwindow" ]; then
     OUT=$(grep X11Forwarding /etc/ssh/sshd_config | grep -o yes)
