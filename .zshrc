@@ -91,7 +91,6 @@ export GTAGSLABEL=pygments
 #alias
 alias emacs='emacsclient -nw -a ""'
 alias ekill='emacsclient -e "(kill-emacs)"'
-alias python="python2.7" #"python" has rich package but "python2.7" is version 2.7.10
 alias active2="source /Users/daiki/pyENV2/bin/activate"
 alias active3="source /Users/daiki/pyENV3/bin/activate"
 #C++ test
