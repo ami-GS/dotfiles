@@ -21,12 +21,14 @@
     py-autopep8
     flymake-python-pyflakes
     jedi-core
+    company-jedi
     yaml-mode
     ; issue? manually
     ;auto-complete-c-header
     golden-ratio
     dockerfile-mode
     helm
+    helm-gtags
     markdown-mode)
   "packages to be installed")
 (unless package-archive-contents (package-refresh-contents))
