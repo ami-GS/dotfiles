@@ -94,8 +94,8 @@ export GTAGSLABEL=pygments
 #alias
 alias emacs='emacsclient -nw -a ""'
 alias ekill='emacsclient -e "(kill-emacs)"'
-alias active2="source /Users/daiki/pyENV2/bin/activate"
-alias active3="source /Users/daiki/pyENV3/bin/activate"
+alias active2="source $HOME/pyENV2/bin/activate"
+alias active3="source $HOME/pyENV3/bin/activate"
 #C++ test
 alias cpptest="c++ -I $HOME/googletest/googletest/include $HOME/googletest/googletest/build/libgtest.a $HOME/googletest/googletest/build/libgtest_main.a"
 
