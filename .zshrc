@@ -84,6 +84,9 @@ fi
 export GOPATH=$HOME/Go
 export PATH=$PATH:$GOPATH/bin
 
+#ruby
+export PATH=$HOME/.rbenv/shims/:$PATH
+
 # for gtags use, not only default langages.
 export GTAGSCONF=/usr/local/share/gtags/gtags.conf
 export GTAGSLABEL=pygments
