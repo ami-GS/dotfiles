@@ -14,17 +14,22 @@
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 (autoload 'python-mode "python-mode" "Python editing mode." t)
-(add-hook 'python-mode-hook
-	  '(lambda ()
-	     (setq indent-tabs-mode nil)
-	     (setq indent-level 4)
-	     (setq python-indent 4)
-	     (setq tab-width 4)
-	     (gtags-mode 1)
-	     ))
 (setenv "PYTHONPATH" "/usr/local/lib/python2.7/site-packages")
 (require 'jedi-core)
-(setq jedi:complete-on-dot t)
-(setq jedi:use-shortcuts t)
-(add-hook 'python-mode-hook 'jedi:setup)
-(add-to-list 'company-backends 'company-jedi) ; backendに追加
+(with-eval-after-load 'company
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (add-to-list 'company-backends 'company-jedi))))
+
+(add-hook 'python-mode-hook
+	  (lambda ()
+	    (setq indent-tabs-mode nil)
+	    (setq indent-level 4)
+	    (setq python-indent 4)
+	    (setq tab-width 4)
+	    (setq jedi:complete-on-dot t)
+	    (setq jedi:use-shortcuts t)
+	    (setq auto-complete-mode nil) ; IMPORTANT!!! to use company in stead of auto-complete
+	    (jedi:setup)
+	    )
+	  )
