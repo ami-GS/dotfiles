@@ -1,16 +1,37 @@
-;(flymake-mode t)
-(require 'python)
 (require 'python-mode)
-(require 'py-autopep8)
-(require 'flymake-python-pyflakes)
-(flymake-python-pyflakes-load)
-(setq py-autopep8-options '("--max-line-length=200"))
-(setq flycheck-flake8-maximum-line-length 200)
-(py-autopep8-enable-on-save)
+
+; need pip install jedi, pyflakes
+
+(add-hook 'find-file-hook 'flymake-find-file-hook)
+(when (load "flymake" t)
+  (defun flymake-pyflakes-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "/usr/local/bin/pyflakes"  (list local-file) ; might need pip install -U pyflakes
+	    )))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pyflakes-init)))
+
+(defun flymake-show-help ()
+  (when (get-char-property (point) 'flymake-overlay)
+    (let ((help (get-char-property (point) 'help-echo)))
+      (if help (message "%s" help)))))
+(add-hook 'post-command-hook 'flymake-show-help)
+
+(custom-set-faces
+  '(flymake-errline ((((class color)) (:background "red")))))
+
+;(require 'py-autopep8)
+;(setq py-autopep8-options '("--max-line-length=200"))
+;(setq flycheck-flake8-maximum-line-length 200)
+;(py-autopep8-enable-on-save)
+;(add-hook 'before-save-hook 'py-autopep8-before-save)
 ;(define-key python-mode-map (kbd "C-c F") 'py-autopep8)          ; バッファ全体のコード整形
 ;(define-key python-mode-map (kbd "C-c f") 'py-autopep8-region)   ; 選択リジョン内のコード整形
-;; 保存時にバッファ全体を自動整形する
-(add-hook 'before-save-hook 'py-autopep8-before-save)
+
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 (autoload 'python-mode "python-mode" "Python editing mode." t)
