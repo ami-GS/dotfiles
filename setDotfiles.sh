@@ -14,6 +14,8 @@ if [  "$(uname)" == 'Darwin' ]; then
     if type git > /dev/null 2>&1; then
 	# is brew installed as default?
 	sudo brew install git tig go
+	# install pip
+	curl -kL https://bootstrap.pypa.io/get-pip.py | python
     fi
     OS='Mac'
 elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
@@ -28,7 +30,7 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	sudo apt-get update -y
 	sudo apt-get install -y cmake zsh golang git tig automake libevent-dev \
 	     exuberant-ctags python-pygments python3-pygments ncurses-dev \
-	     llvm libclang-dev wget cgdb htop
+	     llvm libclang-dev wget cgdb htop python-pip
 	if [  -e /etc/SuSE-release ]; then
 	    sudo apt-get install -y go
 	else
@@ -41,7 +43,7 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	sudo yum update -y
 	sudo yum install -y zsh cmake git tig ctags-etags libevent gcc gcc-c++ \
 	     python-pygments ncurses-devel ncurses wget automake libevent-devel \
-	     devtoolset-7 llvm llvm-devel clang clang-devel go
+	     devtoolset-7 llvm llvm-devel clang clang-devel go python-pip
     fi
     OS='Linux'
 elif [  "$(expr substr $(uname -s) 1 10)" == 'MINGW32_NT' ]; then
@@ -104,6 +106,10 @@ if [ ! -e $GOPATH/src/github.com/tmux/tmux ];then
     sudo ln -s $GOPATH/src/github.com/tmux/tmux/tmux /usr/bin/tmux
     cp .tmux.conf $HOME/
 fi
+
+# need to be separated (observed error only in docker environment)
+pip install setuptools Pygments
+pip install -U jedi epc pyflakes
 
 if [ ! -e global* ]; then
    wget http://tamacom.com/global/global-6.5.6.tar.gz #need to be latest
