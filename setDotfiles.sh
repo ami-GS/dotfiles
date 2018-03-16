@@ -111,10 +111,11 @@ fi
 pip install setuptools Pygments
 pip install -U jedi epc pyflakes
 
+GLOBAL_VER="global-6.5.6"
 if [ ! -e global* ]; then
-   wget http://tamacom.com/global/global-6.5.6.tar.gz #need to be latest
-   tar -zxvf global-6.5.6.tar.gz
-   cd global-6.5.6
+   wget http://tamacom.com/global/$GLOBAL_VER.tar.gz #need to be latest
+   tar -zxvf $GLOBAL_VER.tar.gz
+   cd $GLOBAL_VER
    sudo ./configure && sudo make && sudo make install
    cd $HOME/dotfiles
 fi
@@ -123,8 +124,8 @@ if [ ! -e $HOME/.myconfig ]; then
     mkdir $HOME/.myconfig
 fi
 
-if [ ! -e git-prompt.sh ]; then
-    wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -P ../.myconfig/
+if [ ! -e $HOME/.myconfig/git-prompt.sh ]; then
+    wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -P $HOME/.myconfig/
 fi
 sudo chsh -s /bin/zsh $USER
 cp .zshrc $HOME/
