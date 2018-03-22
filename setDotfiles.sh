@@ -12,8 +12,9 @@ fi
 
 if [  "$(uname)" == 'Darwin' ]; then
     if type git > /dev/null 2>&1; then
-	# is brew installed as default?
-	sudo brew install git tig go
+	# install brew
+	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	sudo brew install git tig go colordiff
 	# install pip
 	curl -kL https://bootstrap.pypa.io/get-pip.py | python
     fi
@@ -30,7 +31,7 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	sudo apt-get update -y
 	sudo apt-get install -y cmake zsh golang git tig automake libevent-dev \
 	     exuberant-ctags python-pygments python3-pygments ncurses-dev \
-	     llvm libclang-dev wget cgdb htop python-pip
+	     llvm libclang-dev wget cgdb htop python-pip colordiff
 	if [  -e /etc/SuSE-release ]; then
 	    sudo apt-get install -y go
 	else
@@ -43,7 +44,7 @@ elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
 	sudo yum update -y
 	sudo yum install -y zsh cmake git tig ctags-etags libevent gcc gcc-c++ \
 	     python-pygments ncurses-devel ncurses wget automake libevent-devel \
-	     devtoolset-7 llvm llvm-devel clang clang-devel go python-pip
+	     devtoolset-7 llvm llvm-devel clang clang-devel go python-pip colordiff
     fi
     OS='Linux'
 elif [  "$(expr substr $(uname -s) 1 10)" == 'MINGW32_NT' ]; then
