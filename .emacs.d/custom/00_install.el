@@ -22,6 +22,10 @@
     flymake-python-pyflakes
     jedi-core
     company-jedi
+    rust-mode
+    racer
+    flycheck-rust
+    company-racer
     yaml-mode
     ; issue? manually
     ;auto-complete-c-header
