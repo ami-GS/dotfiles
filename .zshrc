@@ -84,6 +84,9 @@ fi
 export GOPATH=$HOME/Go
 export PATH=$PATH:$GOPATH/bin
 
+#Rust
+export PATH=$PATH:$HOME/.cargo/bin
+
 #ruby
 export PATH=$HOME/.rbenv/shims/:$PATH
 
