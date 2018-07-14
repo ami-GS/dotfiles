@@ -14,7 +14,7 @@ if [  "$(uname)" == 'Darwin' ]; then
     if type git > /dev/null 2>&1; then
 	# install brew
 	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-	sudo brew install git tig go colordiff
+	brew install git tig go colordiff cmake automake wget libtool pkg-config libevent
 	# install pip
 	curl -kL https://bootstrap.pypa.io/get-pip.py | python
     fi
