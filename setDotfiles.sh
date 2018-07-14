@@ -16,7 +16,10 @@ if [  "$(uname)" == 'Darwin' ]; then
 	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	brew install git tig go colordiff cmake automake wget libtool pkg-config libevent
 	# install pip
-	curl -kL https://bootstrap.pypa.io/get-pip.py | python
+	curl https://bootstrap.pypa.io/get-pip.py > get-pip.py
+	sudo python get-pip.py
+	sudo pip install nose tornado
+	rm get-pip.py
     fi
     OS='Mac'
 elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
@@ -109,8 +112,8 @@ if [ ! -e $GOPATH/src/github.com/tmux/tmux ];then
 fi
 
 # need to be separated (observed error only in docker environment)
-pip install setuptools Pygments
-pip install -U jedi epc pyflakes
+sudo pip install setuptools Pygments
+suuo pip install -U jedi epc pyflakes
 
 GLOBAL_VER="global-6.5.6"
 if [ ! -e global* ]; then
