@@ -104,7 +104,7 @@ if [ ! -e $GOPATH/src/github.com/tmux/tmux ];then
     cd $GOPATH/src/github.com/tmux/tmux
     sh autogen.sh && ./configure && make
     cd $HOME/dotfiles
-    sudo ln -s $GOPATH/src/github.com/tmux/tmux/tmux /usr/bin/tmux
+    sudo ln -s $GOPATH/src/github.com/tmux/tmux/tmux /usr/local/bin/tmux
     cp .tmux.conf $HOME/
 fi
 
