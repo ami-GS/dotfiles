@@ -115,18 +115,20 @@ fi
 sudo pip install setuptools Pygments
 suuo pip install -U jedi epc pyflakes
 
-GLOBAL_VER="global-6.5.6"
-if [ ! -e global* ]; then
-   wget http://tamacom.com/global/$GLOBAL_VER.tar.gz #need to be latest
-   tar -zxvf $GLOBAL_VER.tar.gz
-   cd $GLOBAL_VER
-   sudo ./configure && sudo make && sudo make install
-   cd $HOME/dotfiles
-fi
-
 if [ ! -e $HOME/.myconfig ]; then
     mkdir $HOME/.myconfig
 fi
+
+GLOBAL_VER="global-6.5.6"
+if [ ! -e global* ]; then
+   wget http://tamacom.com/global/$GLOBAL_VER.tar.gz -P $HOME/.myconfig/ #need to be latest
+   cd $HOME/.myconfig
+   tar -zxvf $GLOBAL_VER.tar.gz && cd $GLOBAL_VER
+   sudo ./configure && sudo make && sudo make install
+   rm $HOME/.myconfig/$GLOBAL_VER.tar.gz
+   cd $HOME/dotfiles
+fi
+
 
 if [ ! -e $HOME/.myconfig/git-prompt.sh ]; then
     wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -P $HOME/.myconfig/
