@@ -61,17 +61,18 @@ sudo pip install --upgrade pip
 git config --global user.name ami-GS
 git config --global user.email 1991.daiki@gmail.com
 
-export GOPATH=$HOME/Go/
+export WORKSPACE=$HOME/workspace
+export GOPATH=$WORKSPACE
 export PATH=$PATH:$GOPATH/bin
-if [ ! -e $HOME/Go ]; then
-    mkdir $HOME/Go/
+if [ ! -e $WORKSPACE ]; then
+    mkdir $WORKSPACE
     go get github.com/motemen/ghq
-    git config --global ghq.root $HOME/Go/src
+    git config --global ghq.root $GOPATH/src
 fi
 
 if [ ! -e $GOPATH/src/github.com/Andersbakken/rtags ];then
     ghq get https://github.com/Andersbakken/rtags.git
-    cd $HOME/Go/src/github.com/Andersbakken/rtags
+    cd $GOPATH/src/github.com/Andersbakken/rtags
     git submodule init
     git submodule update
     mkdir build && cd build
@@ -82,7 +83,7 @@ fi
 
 if [ ! -e $GOPATH/src/github.com/rizsotto/Bear ]; then
     ghq get https://github.com/rizsotto/Bear
-    cd $HOME/Go/src/github.com/rizsotto/Bear
+    cd $GOPATH/src/github.com/rizsotto/Bear
     mkdir build && cd build
     cmake .. && make -j 4 && sudo make install -j4
 fi
