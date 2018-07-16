@@ -76,12 +76,14 @@ export EDITOR='emacs -nw'
 #lang
 export locale=en_US.UTF-8
 
+WORKSPACE=$HOME/workspace
+
 #Go
 export PATH=$PATH:/usr/local/go/bin
-if [ ! -e $HOME/Go ]; then
-    mkdir $HOME/Go
+if [ ! -e $WORKSPACE ]; then
+    mkdir $WORKSPACE
 fi
-export GOPATH=$HOME/Go
+export GOPATH=$WORKSPACE
 export PATH=$PATH:$GOPATH/bin
 
 #Rust
