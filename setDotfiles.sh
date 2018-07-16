@@ -115,14 +115,14 @@ fi
 
 # need to be separated (observed error only in docker environment)
 sudo pip install setuptools Pygments
-suuo pip install -U jedi epc pyflakes
+sudo pip install -U jedi epc pyflakes
 
 if [ ! -e $HOME/.myconfig ]; then
     mkdir $HOME/.myconfig
 fi
 
 GLOBAL_VER="global-6.5.6"
-if [ ! -e global* ]; then
+if [[ ! -e global* ]]; then
    wget http://tamacom.com/global/$GLOBAL_VER.tar.gz -P $HOME/.myconfig/ #need to be latest
    cd $HOME/.myconfig
    tar -zxvf $GLOBAL_VER.tar.gz && cd $GLOBAL_VER
