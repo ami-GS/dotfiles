@@ -56,6 +56,7 @@ else
   echo "Your platform ($(uname -a)) is not supported."
   exit 1
 fi
+sudo pip install --upgrade pip
 
 git config --global user.name ami-GS
 git config --global user.email 1991.daiki@gmail.com
