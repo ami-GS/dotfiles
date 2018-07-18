@@ -94,6 +94,10 @@ go get github.com/golang/lint/golint
 go get github.com/kisielk/errcheck
 go get github.com/peco/peco/cmd/peco
 
+# [WIP] rust setting
+curl -sf -L https://static.rust-lang.org/rustup.sh | sh
+
+
 # google test settings
 if [ ! -e $HOME/googletest ]; then
    git clone https://github.com/google/googletest $HOME/googletest
