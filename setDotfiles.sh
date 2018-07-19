@@ -93,6 +93,7 @@ go get -u github.com/nsf/gocode
 go get github.com/golang/lint/golint
 go get github.com/kisielk/errcheck
 go get github.com/peco/peco/cmd/peco
+go get golang.org/x/tools/cmd/goimports
 
 # [WIP] rust setting
 curl -sf -L https://static.rust-lang.org/rustup.sh | sh
