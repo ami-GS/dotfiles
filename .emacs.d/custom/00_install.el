@@ -1,6 +1,7 @@
 ; package auto install
 (defvar my-favorite-package-list
-  '(rtags
+  '(exec-path-from-shell
+    rtags
     company
     company-go
     company-irony

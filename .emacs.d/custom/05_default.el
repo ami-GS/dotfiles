@@ -22,6 +22,9 @@
 ;;(set-language-environment "Japanese")
 
 
+;;shellのPATH引き継ぎ
+(exec-path-from-shell-initialize)
+
 ;; 行番号表示
 (require 'linum)
 (global-linum-mode)
