@@ -2,20 +2,21 @@
 (add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hh\\'" . c++-mode))
-(defun my:ac-c-headers-init ()
-  (require 'auto-complete-c-headers)
-  (add-to-list 'ac-sources 'ac-source-c-headers)
-  ; check list by '>> gcc -xc++ -E -v -'
-  (add-to-list 'achead:include-directories '"
-./
-./include
-../include
-../../include
-/usr/include
-/usr/local/include
-/usr/include/c++
-"))
-(add-hook 'c-mode-common-hook 'my:ac-c-headers-init)
+
+;; (defun my:ac-c-headers-init ()
+;;   (require 'auto-complete-c-headers)
+;;   (add-to-list 'ac-sources 'ac-source-c-headers)
+;;   ; check list by '>> gcc -xc++ -E -v -'
+;;   (add-to-list 'achead:include-directories '"
+;; ./
+;; ./include
+;; ../include
+;; ../../include
+;; /usr/include
+;; /usr/local/include
+;; /usr/include/c++
+;; "))
+;; (add-hook 'c-mode-common-hook 'my:ac-c-headers-init)
 
 ; depends on rtags
 (add-hook 'c-mode-common-hook 'rtags-start-process-unless-running)
@@ -26,15 +27,15 @@
 	    (local-set-key (kbd "M-@") 'rtags-find-references)
 	    (local-set-key (kbd "M-,") 'rtags-location-stack-back)))
 
-;autoinclude for c++
-(load "./cpp-auto-include.el")
-(add-hook 'c++-mode-hook
-  (lambda()
-    (add-hook 'write-contents-functions
-      (lambda()
-        (save-excursion
-          (cpp-auto-include)))
-      nil t)))
+;; ;autoinclude for c++
+;; (load "./cpp-auto-include.el")
+;; (add-hook 'c++-mode-hook
+;;   (lambda()
+;;     (add-hook 'write-contents-functions
+;;       (lambda()
+;;         (save-excursion
+;;           (cpp-auto-include)))
+;;       nil t)))
 
 ;depends on flycheck
 (add-hook 'c-mode-common-hook #'my-flycheck-rtags-setup)
