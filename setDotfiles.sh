@@ -10,16 +10,19 @@ if [ "$PROXY" = "TRUE" ]; then
     sudo python set_proxy.py PROXY_VALUE
 fi
 
+export OSX_LLVM_PATH=""
 if [  "$(uname)" == 'Darwin' ]; then
     if type git > /dev/null 2>&1; then
 	# install brew
 	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	brew install git tig go colordiff cmake automake wget libtool pkg-config libevent
+	brew install llvm --with-libcxx --with-clang --without-assertions --with-rtti
 	# install pip
 	curl https://bootstrap.pypa.io/get-pip.py > get-pip.py
 	sudo python get-pip.py
 	sudo pip install nose tornado
 	rm get-pip.py
+	OSX_LLVM_PATH=/usr/local/Cellar/llvm/`ls /usr/local/Cellar/llvm/`bin/
     fi
     OS='Mac'
 elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
@@ -76,7 +79,7 @@ if [ ! -e $GOPATH/src/github.com/Andersbakken/rtags ];then
     git submodule init
     git submodule update
     mkdir build && cd build
-    cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && make -j4
+    PATH=$PATH:OSX_LLVM_PATH cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && make -j4
     ./bin/rdm --daemon
     cd $HOME
 fi
