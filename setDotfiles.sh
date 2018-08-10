@@ -126,7 +126,7 @@ fi
 
 # need to be separated (observed error only in docker environment)
 sudo pip install setuptools Pygments
-sudo pip install -U jedi epc pyflakes
+sudo pip install -U jedi epc pyflakes virtualenv
 
 if [ ! -e $HOME/.myconfig ]; then
     mkdir $HOME/.myconfig
