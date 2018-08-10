@@ -61,6 +61,9 @@ else
 fi
 sudo pip install --upgrade pip
 
+mkdir $HOME/.ssh && chomd 700 $HOME/.ssh
+ssh-keygen -t rsa -N "" -f $HOME/.ssh/id_rsa
+
 git config --global user.name ami-GS
 git config --global user.email 1991.daiki@gmail.com
 
