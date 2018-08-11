@@ -96,6 +96,9 @@ export PATH=$HOME/.rbenv/shims/:$PATH
 export GTAGSCONF=/usr/local/share/gtags/gtags.conf
 export GTAGSLABEL=pygments
 
+# grep to be colored
+export GREP_OPTIONS='--color=auto'
+
 #alias
 alias emacs='emacsclient -nw -a ""'
 alias ekill='emacsclient -e "(kill-emacs)"'
