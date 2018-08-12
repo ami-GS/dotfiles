@@ -23,6 +23,8 @@ if [  "$(uname)" == 'Darwin' ]; then
 	sudo pip install nose tornado
 	rm get-pip.py
 	OSX_LLVM_PATH=/usr/local/Cellar/llvm/`ls /usr/local/Cellar/llvm/`bin/
+	mkdir $HOME/.config/alacritty
+	dp $HOME/dotfiles/alacritty/alacritty.yml $HOME/.config/alacritty/
     fi
     OS='Mac'
 elif [  "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
@@ -151,6 +153,13 @@ cp .zshrc $HOME/
 cp .emacs $HOME/
 cp -r .emacs.d $HOME/
 cp -r .docker $HOME/
+
+emacs --daemon -l $HOME/.emacs
+pkill emacs
+
+IRONY_NAME=`find $HOME/.emacs.d/elpa/ -name "irony*" -type d`
+# irony-install-server
+cmake -DCMAKE_INSTALL_PREFIX=$HOME/.emacs.d/irony/ $IRONY_NAME/server && cmake --build . --use-stderr --config Release --target install
 
 if [ "$*" == "--xwindow" ]; then
     OUT=$(grep X11Forwarding /etc/ssh/sshd_config | grep -o yes)
