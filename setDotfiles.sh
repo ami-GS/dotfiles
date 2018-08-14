@@ -159,7 +159,7 @@ pkill emacs
 
 IRONY_NAME=`find $HOME/.emacs.d/elpa/ -name "irony*" -type d`
 # irony-install-server
-cmake -DCMAKE_INSTALL_PREFIX=$HOME/.emacs.d/irony/ $IRONY_NAME/server && cmake --build . --use-stderr --config Release --target install
+cd /tmp && cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/llvm -DCMAKE_INSTALL_PREFIX=$HOME/.emacs.d/irony/ $IRONY_NAME/server && cmake --build . --use-stderr --config Release --target install && cd -
 
 if [ "$*" == "--xwindow" ]; then
     OUT=$(grep X11Forwarding /etc/ssh/sshd_config | grep -o yes)
