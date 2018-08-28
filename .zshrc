@@ -96,15 +96,14 @@ export PATH=$HOME/.rbenv/shims/:$PATH
 export GTAGSCONF=/usr/local/share/gtags/gtags.conf
 export GTAGSLABEL=pygments
 
-# grep to be colored
-export GREP_OPTIONS='--color=auto'
-
 #alias
 alias emacs='emacsclient -nw -a ""'
 alias ekill='emacsclient -e "(kill-emacs)"'
 alias active2="source $HOME/pyENV2/bin/activate"
 alias active3="source $HOME/pyENV3/bin/activate"
 alias diff="colordiff -y"
+# grep to be colored
+alias grep='grep --color=auto'
 # for rtags
 alias cmake_rtags="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 #C++ test
