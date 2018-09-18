@@ -153,6 +153,17 @@ cp .zshrc $HOME/
 cp .emacs $HOME/
 cp -r .emacs.d $HOME/
 cp -r .docker $HOME/
+cp -r .config $HOME/
+
+ghq get https://github.com/jwilm/alacritty
+cd $GOPATH/src/github.com/jwilm/alacritty
+if [  "$(uname)" == 'Darwin' ]; then
+    make app
+    cp -r target/release/osx/Alacritty.app /Applications/
+else #linux
+    cargo build --release
+fi
+cd $HOME
 
 #TODO: emacs of mac is really old, need to adapt
 emacs --daemon -l $HOME/.emacs
