@@ -34,7 +34,8 @@
     dockerfile-mode
     helm
     helm-gtags
-    markdown-mode)
+    markdown-mode
+    origami)
   "packages to be installed")
 (unless package-archive-contents (package-refresh-contents))
 (dolist (pkg my-favorite-package-list)
