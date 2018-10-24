@@ -28,6 +28,7 @@
     flycheck-rust
     company-racer
     yaml-mode
+    magit
     ; issue? manually
     ;auto-complete-c-header
     golden-ratio
